@@ -19,9 +19,9 @@ export function Header() {
     <header
       className={`
         fixed top-0 left-0 right-0 z-40
-        transition-[background-color,backdrop-filter,box-shadow] duration-300
+        transition-[background-color,box-shadow] duration-300
         ${scrolled
-          ? 'bg-graphite-800/95 backdrop-blur-md shadow-[0_1px_0_rgba(255,255,255,0.06)]'
+          ? 'bg-graphite-800/98 shadow-[0_1px_0_rgba(255,255,255,0.06)]'
           : 'bg-transparent'}
       `}
     >
@@ -97,7 +97,7 @@ export function Header() {
         className={`
           md:hidden overflow-hidden
           transition-[max-height,opacity] duration-300 ease-in-out
-          bg-graphite-800/98 backdrop-blur-md
+          bg-graphite-800
           border-t border-white/6
           ${open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}
         `}

@@ -28,9 +28,9 @@ export function Hero() {
 
       {/* Amber glow accent */}
       <div
-        className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.06] blur-[100px] pointer-events-none"
+        className="absolute -top-40 -right-40 w-[600px] h-[600px] pointer-events-none"
         aria-hidden="true"
-        style={{ background: '#E8870C' }}
+        style={{ background: 'radial-gradient(circle, rgba(232,135,12,0.07) 0%, transparent 70%)' }}
       />
 
       {/* Content */}
