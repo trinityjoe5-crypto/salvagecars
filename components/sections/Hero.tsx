@@ -70,21 +70,15 @@ export function Hero() {
 
           {/* Sub */}
           <p
-            className="anim-fade-in-up mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
-            style={{
-              fontFamily: 'var(--font-figtree), sans-serif',
-              animationDelay: '100ms',
-            }}
+            className="mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
+            style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
           >
             Kupujeme a predávame vraky, havarované a poškodené autá na Slovensku.
             Férová cena, rýchle vybavenie, bez komplikácií.
           </p>
 
           {/* CTAs */}
-          <div
-            className="anim-fade-in-up flex flex-wrap gap-3 mt-9"
-            style={{ animationDelay: '280ms' }}
-          >
+          <div className="flex flex-wrap gap-3 mt-9">
             <Link
               href="/ponuka"
               className="
@@ -124,10 +118,7 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div
-            className="anim-fade-in-up flex flex-wrap gap-6 mt-12"
-            style={{ animationDelay: '380ms' }}
-          >
+          <div className="flex flex-wrap gap-6 mt-12">
             {[
               { value: '6+', label: 'rokov na trhu' },
               { value: '150+', label: 'vozidiel ročne' },
@@ -154,8 +145,7 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div
-        className="anim-fade-in absolute bottom-8 left-1/2 -translate-x-1/2"
-        style={{ animationDelay: '800ms' }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1.5 opacity-30">
