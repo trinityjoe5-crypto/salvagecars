@@ -80,6 +80,7 @@ export default async function CarDetailPage({ params }: Props) {
                 sizes="(max-width: 1024px) 100vw, 65vw"
                 className="object-cover"
                 priority
+                unoptimized
               />
             </div>
 
@@ -97,6 +98,7 @@ export default async function CarDetailPage({ params }: Props) {
                       fill
                       sizes="80px"
                       className="object-cover"
+                      unoptimized
                     />
                   </div>
                 ))}
