@@ -82,7 +82,7 @@ export function Hero() {
             <Link
               href="/ponuka-vozidiel"
               className="
-                inline-flex items-center gap-2
+                flex-1 sm:flex-none inline-flex items-center justify-center gap-2
                 text-[13px] sm:text-[16px]
                 px-4 py-3 sm:px-7 sm:py-4 bg-amber text-white font-bold rounded-xl
                 hover:bg-amber-600 active:scale-[0.97]
@@ -102,7 +102,7 @@ export function Hero() {
             <a
               href={`tel:${site.phone.replace(/\s/g, '')}`}
               className="
-                inline-flex items-center gap-2
+                flex-1 sm:flex-none inline-flex items-center justify-center gap-2
                 text-[13px] sm:text-[16px]
                 px-4 py-3 sm:px-7 sm:py-4 text-white font-semibold rounded-xl
                 border border-white/20
