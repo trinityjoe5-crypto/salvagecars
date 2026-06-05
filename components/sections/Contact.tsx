@@ -62,7 +62,7 @@ export function Contact() {
           </h2>
         </div>
 
-        <div data-reveal data-reveal-delay="160" className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div data-reveal data-reveal-delay="80" className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
 
           {/* Contact info */}
           <div className="flex flex-col gap-6">

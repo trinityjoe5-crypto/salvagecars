@@ -11,7 +11,7 @@ export function ScrollRevealProvider() {
       const top = el.getBoundingClientRect().top
       if (top >= window.innerHeight * 0.98) {
         el.style.opacity = '0'
-        el.style.transform = 'translateY(14px)'
+        el.style.transform = 'translateY(10px)'
       }
     })
 
@@ -21,13 +21,13 @@ export function ScrollRevealProvider() {
           if (!entry.isIntersecting) return
           const el = entry.target as HTMLElement
           const delay = el.dataset.revealDelay ?? '0'
-          el.style.transition = `opacity 0.45s cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform 0.45s cubic-bezier(0.22,1,0.36,1) ${delay}ms`
+          el.style.transition = `opacity 0.38s cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms, transform 0.38s cubic-bezier(0.25,0.46,0.45,0.94) ${delay}ms`
           el.style.opacity = '1'
           el.style.transform = 'translateY(0)'
           observer.unobserve(el)
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -16px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
     )
 
     els.forEach(el => {

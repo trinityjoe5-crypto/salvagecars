@@ -96,7 +96,7 @@ export function Vykup() {
           </div>
 
           {/* Right: Benefits */}
-          <div data-reveal data-reveal-delay="150" className="grid grid-cols-1 gap-4">
+          <div data-reveal data-reveal-delay="80" className="grid grid-cols-1 gap-4">
             {[
               {
                 title: 'Rýchle vybavenie',

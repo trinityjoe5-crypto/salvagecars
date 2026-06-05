@@ -44,7 +44,7 @@ export function HowItWorks() {
           </span>
         </div>
 
-        <div data-reveal data-reveal-delay="80" className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div data-reveal data-reveal-delay="40" className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <h2
             id="how-it-works-heading"
             style={{
@@ -87,7 +87,7 @@ export function HowItWorks() {
             <div
               key={step.number}
               data-reveal
-              data-reveal-delay={String(160 + i * 100)}
+              data-reveal-delay={String(i * 70)}
               className="relative bg-surface rounded-2xl p-7 border border-white/6"
             >
               {/* Connector line (not on last) */}
