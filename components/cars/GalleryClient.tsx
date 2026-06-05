@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 interface Props {
   photos: string[]
@@ -9,11 +9,33 @@ interface Props {
 
 export function GalleryClient({ photos, title }: Props) {
   const [active, setActive] = useState(0)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const thumbRefs = useRef<(HTMLButtonElement | null)[]>([])
 
   const prev = useCallback(() =>
     setActive((i) => (i - 1 + photos.length) % photos.length), [photos.length])
   const next = useCallback(() =>
     setActive((i) => (i + 1) % photos.length), [photos.length])
+
+  // Auto-scroll strip when active thumbnail changes
+  useEffect(() => {
+    const strip = stripRef.current
+    const thumb = thumbRefs.current[active]
+    if (!strip || !thumb) return
+
+    if (active === photos.length - 1) {
+      // Last thumbnail — wrap strip back to the beginning
+      strip.scrollTo({ left: 0, behavior: 'smooth' })
+    } else {
+      // Scroll so the active thumb sits at the left edge of the visible strip
+      const thumbLeft = thumb.getBoundingClientRect().left
+      const stripLeft = strip.getBoundingClientRect().left
+      strip.scrollTo({
+        left: strip.scrollLeft + (thumbLeft - stripLeft),
+        behavior: 'smooth',
+      })
+    }
+  }, [active, photos.length])
 
   if (photos.length === 0) {
     return (
@@ -91,10 +113,15 @@ export function GalleryClient({ photos, title }: Props) {
 
       {/* Thumbnail strip */}
       {photos.length > 1 && (
-        <div className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+        <div
+          ref={stripRef}
+          className="flex gap-2 mt-3 overflow-x-auto pb-1"
+          style={{ scrollbarWidth: 'none' }}
+        >
           {photos.map((src, i) => (
             <button
               key={i}
+              ref={(el) => { thumbRefs.current[i] = el }}
               onClick={() => setActive(i)}
               aria-label={`Fotka ${i + 1}`}
               aria-pressed={i === active}
