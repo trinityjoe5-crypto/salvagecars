@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { getCars } from '@/lib/cars'
-import { CarCard } from '@/components/cars/CarCard'
+import { fetchCars } from '@/lib/feed'
+import { FeedCarCard } from '@/components/cars/FeedCarCard'
 
-export function FeaturedCars() {
-  const featured = getCars().slice(0, 3)
+export async function FeaturedCars() {
+  const featured = (await fetchCars()).slice(0, 3)
 
   return (
     <section
@@ -62,7 +62,7 @@ export function FeaturedCars() {
         {/* Car grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((car) => (
-            <CarCard key={car.id} car={car} />
+            <FeedCarCard key={car.id} car={car} />
           ))}
         </div>
 
