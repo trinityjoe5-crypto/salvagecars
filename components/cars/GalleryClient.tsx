@@ -12,7 +12,10 @@ export function GalleryClient({ photos, title }: Props) {
 
   if (photos.length === 0) {
     return (
-      <div className="w-full h-[260px] sm:h-[400px] rounded-2xl bg-graphite-600 flex items-center justify-center text-white/20">
+      <div
+        className="w-full rounded-2xl bg-graphite-600 flex items-center justify-center text-white/20"
+        style={{ aspectRatio: '16/9' }}
+      >
         <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M4 16l4-4 3 3 4-5 5 6H4zm16-12H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm-8 6a2 2 0 110-4 2 2 0 010 4z"/>
         </svg>
@@ -23,12 +26,15 @@ export function GalleryClient({ photos, title }: Props) {
   return (
     <div>
       {/* Main photo */}
-      <div className="relative rounded-2xl overflow-hidden bg-graphite-600 mb-3">
+      <div
+        className="relative w-full rounded-2xl overflow-hidden bg-graphite-600 mb-3"
+        style={{ aspectRatio: '16/9' }}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photos[active]}
           alt={`${title} — foto ${active + 1}`}
-          className="w-full h-[260px] sm:h-[420px] object-contain"
+          className="w-full h-full object-cover"
         />
         {/* Counter */}
         {photos.length > 1 && (
@@ -50,13 +56,14 @@ export function GalleryClient({ photos, title }: Props) {
               onClick={() => setActive(i)}
               aria-label={`Foto ${i + 1}`}
               className={`
-                shrink-0 w-20 h-14 rounded-lg overflow-hidden
+                shrink-0 rounded-lg overflow-hidden
                 border-2 transition-[border-color,opacity] duration-150
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
                 ${i === active
                   ? 'border-amber opacity-100'
                   : 'border-white/10 opacity-50 hover:opacity-80 hover:border-white/30'}
               `}
+              style={{ width: 80, height: 56, flexShrink: 0 }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
