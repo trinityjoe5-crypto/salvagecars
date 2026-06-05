@@ -80,7 +80,7 @@ export function Hero() {
           {/* CTAs */}
           <div className="flex flex-wrap gap-3 mt-9">
             <Link
-              href="/ponuka"
+              href="/ponuka-vozidiel"
               className="
                 inline-flex items-center gap-2.5
                 px-7 py-4 bg-amber text-white font-bold rounded-xl

@@ -43,7 +43,7 @@ export function FeaturedCars() {
           </div>
 
           <Link
-            href="/ponuka"
+            href="/ponuka-vozidiel"
             className="
               shrink-0 self-start sm:self-auto
               inline-flex items-center gap-2 text-[14px] font-semibold text-white/60
@@ -69,7 +69,7 @@ export function FeaturedCars() {
         {/* "View all" CTA */}
         <div className="mt-10 flex justify-center">
           <Link
-            href="/ponuka"
+            href="/ponuka-vozidiel"
             className="
               inline-flex items-center gap-2.5
               px-8 py-4 bg-surface text-white font-bold rounded-xl
