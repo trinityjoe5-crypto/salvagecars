@@ -14,7 +14,7 @@ export function GalleryClient({ photos, title }: Props) {
     return (
       <div
         className="w-full rounded-2xl bg-graphite-600 flex items-center justify-center text-white/20"
-        style={{ aspectRatio: '16/9' }}
+        style={{ paddingTop: 'min(56.25%, 380px)', position: 'relative' }}
       >
         <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M4 16l4-4 3 3 4-5 5 6H4zm16-12H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm-8 6a2 2 0 110-4 2 2 0 010 4z"/>
@@ -28,13 +28,13 @@ export function GalleryClient({ photos, title }: Props) {
       {/* Main photo */}
       <div
         className="relative w-full rounded-2xl overflow-hidden bg-graphite-600 mb-3"
-        style={{ aspectRatio: '16/9' }}
+        style={{ paddingTop: 'min(56.25%, 380px)' }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photos[active]}
           alt={`${title} — foto ${active + 1}`}
-          className="w-full h-full object-cover"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Counter */}
         {photos.length > 1 && (
