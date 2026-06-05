@@ -78,11 +78,12 @@ export function Hero() {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-3 mt-9">
+          <div className="flex gap-3 mt-9">
             <Link
               href="/ponuka-vozidiel"
               className="
-                inline-flex items-center gap-2.5
+                flex-1 sm:flex-none
+                inline-flex items-center justify-center gap-2.5
                 px-7 py-4 bg-amber text-white font-bold rounded-xl
                 hover:bg-amber-600 active:scale-[0.97]
                 transition-[background-color,transform,box-shadow] duration-200
@@ -93,7 +94,7 @@ export function Hero() {
               style={{ fontFamily: 'var(--font-barlow), sans-serif', fontSize: '16px', letterSpacing: '0.04em' }}
             >
               ZOBRAZIŤ PONUKU
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="shrink-0">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
@@ -101,7 +102,8 @@ export function Hero() {
             <a
               href={`tel:${site.phone.replace(/\s/g, '')}`}
               className="
-                inline-flex items-center gap-2.5
+                flex-1 sm:flex-none
+                inline-flex items-center justify-center gap-2.5
                 px-7 py-4 text-white font-semibold rounded-xl
                 border border-white/20
                 hover:bg-white/8 hover:border-white/30 active:scale-[0.97]
@@ -110,7 +112,7 @@ export function Hero() {
               "
               style={{ fontFamily: 'var(--font-barlow), sans-serif', fontSize: '16px', letterSpacing: '0.02em' }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="shrink-0">
                 <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
               </svg>
               {site.phoneDisplay}
