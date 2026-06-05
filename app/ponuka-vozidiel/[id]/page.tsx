@@ -123,11 +123,22 @@ export default async function FeedCarDetailPage({ params }: Props) {
                 </details>
               </div>
             )}
+
+            {/* Back link */}
+            <Link
+              href="/ponuka-vozidiel"
+              className="mt-2 flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60 transition-colors duration-150 px-1"
+              style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Späť na ponuku
+            </Link>
           </div>
 
-          {/* ── Right column — sticky card ───────────────── */}
-          <div className="lg:sticky lg:top-24 flex flex-col gap-4">
-            <div className="bg-surface rounded-2xl p-6 border border-white/8">
+          {/* ── Right column — card is the direct grid item ── */}
+          <div className="lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
 
               {/* Reserved badge */}
               {car.isReserved && (
@@ -259,21 +270,6 @@ export default async function FeedCarDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Back link */}
-            <Link
-              href="/ponuka-vozidiel"
-              className="
-                flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60
-                transition-colors duration-150 px-1
-              "
-              style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Späť na ponuku
-            </Link>
-          </div>
         </div>
       </div>
     </div>
