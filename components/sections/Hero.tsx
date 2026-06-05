@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { site } from '@/config/site'
+import { CountUp } from '@/components/ui/CountUp'
 
 export function Hero() {
   return (
@@ -126,26 +127,9 @@ export function Hero() {
 
           {/* Trust row */}
           <div className="hero-reveal flex flex-wrap gap-6 mt-16 sm:mt-12" style={{ animationDelay: '520ms' }}>
-            {[
-              { value: '6+', label: 'rokov na trhu' },
-              { value: '150+', label: 'vozidiel ročne' },
-              { value: '100%', label: 'férovosť & transparentnosť' },
-            ].map(({ value, label }) => (
-              <div key={label} className="flex flex-col">
-                <span
-                  className="text-[34px] sm:text-[28px] font-black text-white leading-none"
-                  style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.03em' }}
-                >
-                  {value}
-                </span>
-                <span
-                  className="text-[13px] sm:text-[12px] text-white/40 mt-1 sm:mt-0.5"
-                  style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-                >
-                  {label}
-                </span>
-              </div>
-            ))}
+            <CountUp target={6}   suffix="+" label="rokov na trhu"               delay={650} />
+            <CountUp target={150} suffix="+" label="vozidiel ročne"              delay={650} />
+            <CountUp target={100} suffix="%" label="férovosť & transparentnosť" delay={650} />
           </div>
         </div>
       </div>
