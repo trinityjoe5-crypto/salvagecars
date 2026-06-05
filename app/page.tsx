@@ -5,7 +5,7 @@ import { FeaturedCars } from '@/components/sections/FeaturedCars'
 import { Vykup } from '@/components/sections/Vykup'
 import { Contact } from '@/components/sections/Contact'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 export default function HomePage() {
   return (

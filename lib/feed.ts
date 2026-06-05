@@ -1,4 +1,4 @@
-import { FEED_URL } from './config'
+import { FEED_URL, REVALIDATE_SECONDS } from './config'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -119,7 +119,7 @@ export async function fetchCars(): Promise<FeedCar[]> {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       },
-      cache: 'no-store',
+      next: { revalidate: REVALIDATE_SECONDS },
     })
 
     if (!res.ok) {

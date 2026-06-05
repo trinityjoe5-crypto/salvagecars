@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { fetchCarById } from '@/lib/feed'
+import { fetchCars, fetchCarById } from '@/lib/feed'
 import { GalleryClient } from '@/components/cars/GalleryClient'
 import { site } from '@/config/site'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  const cars = await fetchCars()
+  return cars.map((car) => ({ id: car.id }))
+}
 
 type Props = { params: Promise<{ id: string }> }
 
