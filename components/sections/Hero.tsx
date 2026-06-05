@@ -120,7 +120,7 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div className="flex flex-wrap gap-6 mt-12">
+          <div className="flex flex-wrap gap-6 mt-7 sm:mt-12">
             {[
               { value: '6+', label: 'rokov na trhu' },
               { value: '150+', label: 'vozidiel ročne' },
