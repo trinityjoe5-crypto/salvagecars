@@ -34,7 +34,7 @@ export function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-20 sm:py-28">
+      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 py-12 sm:py-28">
         <div className="max-w-2xl">
 
           {/* Eyebrow */}
