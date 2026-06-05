@@ -11,7 +11,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-2.5 group select-none ${className}`}
+      className={`inline-flex items-center gap-2.5 group select-none active:scale-95 transition-transform duration-150 ${className}`}
       aria-label="SalvageCars — domovská stránka"
     >
       {/* Diamond mark */}

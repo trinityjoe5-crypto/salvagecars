@@ -38,8 +38,8 @@ export function Header() {
               className="
                 px-4 py-2 text-[14px] font-medium text-white/70
                 hover:text-white rounded-lg
-                hover:bg-white/6
-                transition-[color,background-color] duration-150
+                hover:bg-white/6 active:scale-95
+                transition-[color,background-color,transform] duration-150
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
               "
               style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
@@ -110,8 +110,8 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="
                 px-4 py-3 text-[15px] font-medium text-white/80
-                hover:text-white rounded-lg hover:bg-white/6
-                transition-[color,background-color] duration-150
+                hover:text-white rounded-lg hover:bg-white/6 active:scale-95
+                transition-[color,background-color,transform] duration-150
               "
               style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
             >

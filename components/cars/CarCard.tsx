@@ -30,8 +30,8 @@ export function CarCard({ car }: CarCardProps) {
         hover:border-amber/30
         shadow-[0_2px_16px_rgba(0,0,0,0.3)]
         hover:shadow-[0_6px_32px_rgba(0,0,0,0.45),0_0_0_1px_rgba(232,135,12,0.2)]
-        transition-[border-color,box-shadow,transform] duration-300
-        hover:-translate-y-1
+        transition-[border-color,box-shadow,transform] duration-200
+        hover:-translate-y-1 active:scale-[0.97] active:translate-y-0
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
       "
     >
