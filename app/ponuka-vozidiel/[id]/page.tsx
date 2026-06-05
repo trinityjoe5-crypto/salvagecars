@@ -51,9 +51,9 @@ export default async function FeedCarDetailPage({ params }: Props) {
           style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
           aria-label="Drobky chleba"
         >
-          <Link href="/" className="hover:text-white transition-colors duration-150">Domov</Link>
+          <Link href="/" className="hover:text-white transition-colors duration-150 whitespace-nowrap">Domov</Link>
           <span aria-hidden="true">/</span>
-          <Link href="/ponuka-vozidiel" className="hover:text-white transition-colors duration-150">Ponuka vozidiel</Link>
+          <Link href="/ponuka-vozidiel" className="hover:text-white transition-colors duration-150 whitespace-nowrap">Ponuka vozidiel</Link>
           <span aria-hidden="true">/</span>
           <span className="text-white/60 truncate max-w-[180px]">{car.title}</span>
         </nav>
