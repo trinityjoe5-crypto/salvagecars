@@ -27,9 +27,9 @@ export function GalleryClient({ photos, title }: Props) {
   }
 
   return (
-    <>
+    <div className="w-full">
       {/* Main photo with prev/next arrows */}
-      <div className="relative w-full rounded-2xl overflow-hidden bg-graphite-600 mb-4"
+      <div className="relative w-full rounded-2xl overflow-hidden bg-graphite-600"
         style={{ aspectRatio: '16/9' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -88,6 +88,6 @@ export function GalleryClient({ photos, title }: Props) {
           </span>
         )}
       </div>
-    </>
+    </div>
   )
 }
