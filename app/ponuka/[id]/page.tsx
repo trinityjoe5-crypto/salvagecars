@@ -66,10 +66,15 @@ export default async function CarDetailPage({ params }: Props) {
       </div>
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-10 items-start">
+        {/*
+          Mobile order:  1. Gallery  2. Info card  3. Popis + poškodenie
+          Desktop order: col-1/row-1 Gallery | col-2/row-1+2 Info card (sticky)
+                         col-1/row-2 Popis + poškodenie
+        */}
+        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_380px] lg:gap-x-10 lg:gap-y-8 lg:items-start">
 
-          {/* Left column */}
-          <div>
+          {/* Gallery — always first */}
+          <div className="order-1 lg:col-start-1 lg:row-start-1 min-w-0">
 
             {/* Main image */}
             <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-graphite-600 mb-4">
@@ -104,47 +109,10 @@ export default async function CarDetailPage({ params }: Props) {
                 ))}
               </div>
             )}
-
-            {/* Description */}
-            <div className="mt-8">
-              <h2
-                className="text-[20px] font-bold text-white mb-3"
-                style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
-              >
-                Popis
-              </h2>
-              <p
-                className="text-[15px] text-white/60 leading-[1.75]"
-                style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-              >
-                {car.longDescription}
-              </p>
-            </div>
-
-            {/* Damage description */}
-            <div className="mt-6 p-5 bg-amber/6 border border-amber/20 rounded-xl">
-              <div className="flex items-center gap-2.5 mb-3">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#E8870C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <h3
-                  className="text-[16px] font-bold text-amber"
-                  style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
-                >
-                  Popis poškodenia
-                </h3>
-              </div>
-              <p
-                className="text-[14px] text-white/55 leading-[1.7]"
-                style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-              >
-                {car.damageDescription}
-              </p>
-            </div>
           </div>
 
-          {/* Right column — sticky card */}
-          <div className="lg:sticky lg:top-24 flex flex-col gap-4">
+          {/* Right column — 2nd on mobile, sticky right on desktop */}
+          <div className="order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-24 flex flex-col gap-4">
 
             <div className="bg-surface rounded-2xl p-6 border border-white/8">
 
@@ -263,13 +231,52 @@ export default async function CarDetailPage({ params }: Props) {
               </div>
             </div>
 
+          </div>
+
+          {/* Popis + poškodenie — 3rd on mobile, col-1/row-2 on desktop */}
+          <div className="order-3 lg:col-start-1 lg:row-start-2 min-w-0">
+
+            {/* Description */}
+            <div>
+              <h2
+                className="text-[20px] font-bold text-white mb-3"
+                style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
+              >
+                Popis
+              </h2>
+              <p
+                className="text-[15px] text-white/60 leading-[1.75]"
+                style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+              >
+                {car.longDescription}
+              </p>
+            </div>
+
+            {/* Damage description */}
+            <div className="mt-6 p-5 bg-amber/6 border border-amber/20 rounded-xl">
+              <div className="flex items-center gap-2.5 mb-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#E8870C" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <h3
+                  className="text-[16px] font-bold text-amber"
+                  style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
+                >
+                  Popis poškodenia
+                </h3>
+              </div>
+              <p
+                className="text-[14px] text-white/55 leading-[1.7]"
+                style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+              >
+                {car.damageDescription}
+              </p>
+            </div>
+
             {/* Back link */}
             <Link
               href="/ponuka"
-              className="
-                flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60
-                transition-colors duration-150 px-1
-              "
+              className="mt-6 flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60 transition-colors duration-150 px-1"
               style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -278,6 +285,7 @@ export default async function CarDetailPage({ params }: Props) {
               Späť na ponuku
             </Link>
           </div>
+
         </div>
       </div>
     </div>

@@ -60,86 +60,20 @@ export default async function FeedCarDetailPage({ params }: Props) {
       </div>
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10"
-             style={{ alignItems: 'start' }}>
+        {/*
+          Mobile order:  1. Gallery  2. Info card  3. Výbava
+          Desktop order: col-1/row-1 Gallery | col-2/row-1+2 Info card (sticky)
+                         col-1/row-2 Výbava
+        */}
+        <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[1fr_360px] lg:gap-x-10 lg:gap-y-8 lg:items-start">
 
-          {/* ── Left column ─────────────────────────────── */}
-          <div className="min-w-0">
-
-            {/* Gallery */}
+          {/* ── Gallery — always first ─────────────────── */}
+          <div className="order-1 lg:col-start-1 lg:row-start-1 min-w-0">
             <GalleryClient photos={car.photos} title={car.title} />
-
-            {/* Výbava */}
-            {car.contentExtend && (
-              <div className="mt-8">
-                <h2
-                  className="text-[19px] font-bold text-white mb-4"
-                  style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
-                >
-                  Výbava
-                </h2>
-                <p
-                  className="text-[14px] text-white/55 leading-[1.75] whitespace-pre-line"
-                  style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-                >
-                  {car.contentExtend.trim()}
-                </p>
-              </div>
-            )}
-
-            {/* Podmienky predaja — collapsible */}
-            {car.contentOptions && (
-              <div className="mt-6">
-                <details className="group">
-                  <summary
-                    className="
-                      flex items-center justify-between gap-3 cursor-pointer
-                      px-5 py-4 bg-surface rounded-xl border border-white/6
-                      hover:border-white/12 transition-colors duration-200
-                      list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
-                    "
-                  >
-                    <span
-                      className="text-[15px] font-semibold text-white/70"
-                      style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
-                    >
-                      Podmienky predaja
-                    </span>
-                    <svg
-                      width="16" height="16" viewBox="0 0 24 24" fill="none"
-                      className="shrink-0 text-white/40 transition-transform duration-200 group-open:rotate-180"
-                      aria-hidden="true"
-                    >
-                      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </summary>
-                  <div className="px-5 pt-4 pb-5 bg-surface/50 rounded-b-xl border-x border-b border-white/6 -mt-1">
-                    <p
-                      className="text-[13px] text-white/45 leading-[1.75] whitespace-pre-line"
-                      style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-                    >
-                      {car.contentOptions.trim()}
-                    </p>
-                  </div>
-                </details>
-              </div>
-            )}
-
-            {/* Back link */}
-            <Link
-              href="/ponuka-vozidiel"
-              className="mt-2 flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60 transition-colors duration-150 px-1"
-              style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Späť na ponuku
-            </Link>
           </div>
 
-          {/* ── Right column — card is the direct grid item ── */}
-          <div className="lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
+          {/* ── Right column — card: 2nd on mobile, sticky right on desktop ── */}
+          <div className="order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
 
               {/* Reserved badge */}
               {car.isReserved && (
@@ -270,6 +204,78 @@ export default async function FeedCarDetailPage({ params }: Props) {
                 )}
               </div>
             </div>
+
+          {/* ── Výbava + rest — 3rd on mobile, col-1/row-2 on desktop ── */}
+          <div className="order-3 lg:col-start-1 lg:row-start-2 min-w-0">
+
+            {/* Výbava */}
+            {car.contentExtend && (
+              <div>
+                <h2
+                  className="text-[19px] font-bold text-white mb-4"
+                  style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
+                >
+                  Výbava
+                </h2>
+                <p
+                  className="text-[14px] text-white/55 leading-[1.75] whitespace-pre-line"
+                  style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+                >
+                  {car.contentExtend.trim()}
+                </p>
+              </div>
+            )}
+
+            {/* Podmienky predaja — collapsible */}
+            {car.contentOptions && (
+              <div className="mt-6">
+                <details className="group">
+                  <summary
+                    className="
+                      flex items-center justify-between gap-3 cursor-pointer
+                      px-5 py-4 bg-surface rounded-xl border border-white/6
+                      hover:border-white/12 transition-colors duration-200
+                      list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
+                    "
+                  >
+                    <span
+                      className="text-[15px] font-semibold text-white/70"
+                      style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}
+                    >
+                      Podmienky predaja
+                    </span>
+                    <svg
+                      width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      className="shrink-0 text-white/40 transition-transform duration-200 group-open:rotate-180"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </summary>
+                  <div className="px-5 pt-4 pb-5 bg-surface/50 rounded-b-xl border-x border-b border-white/6 -mt-1">
+                    <p
+                      className="text-[13px] text-white/45 leading-[1.75] whitespace-pre-line"
+                      style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+                    >
+                      {car.contentOptions.trim()}
+                    </p>
+                  </div>
+                </details>
+              </div>
+            )}
+
+            {/* Back link */}
+            <Link
+              href="/ponuka-vozidiel"
+              className="mt-6 flex items-center gap-2 text-[13px] text-white/35 hover:text-white/60 transition-colors duration-150 px-1"
+              style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Späť na ponuku
+            </Link>
+          </div>
 
         </div>
       </div>
