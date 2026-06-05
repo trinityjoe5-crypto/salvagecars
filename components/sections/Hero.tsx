@@ -4,7 +4,7 @@ import { site } from '@/config/site'
 export function Hero() {
   return (
     <section
-      className="relative min-h-[75vh] sm:min-h-screen flex flex-col justify-start sm:justify-center pt-16 overflow-hidden bg-graphite"
+      className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-start sm:justify-center pt-16 overflow-hidden bg-graphite"
       aria-labelledby="hero-heading"
     >
       {/* Dot grid texture */}
