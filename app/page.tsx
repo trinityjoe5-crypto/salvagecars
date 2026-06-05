@@ -5,6 +5,8 @@ import { FeaturedCars } from '@/components/sections/FeaturedCars'
 import { Vykup } from '@/components/sections/Vykup'
 import { Contact } from '@/components/sections/Contact'
 
+export const dynamic = 'force-dynamic'
+
 export default function HomePage() {
   return (
     <>

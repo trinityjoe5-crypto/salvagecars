@@ -1,16 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { fetchCars, fetchCarById } from '@/lib/feed'
+import { fetchCarById } from '@/lib/feed'
 import { GalleryClient } from '@/components/cars/GalleryClient'
 import { site } from '@/config/site'
 
-export const revalidate = 3600 // matches REVALIDATE_SECONDS in lib/config.ts
-
-export async function generateStaticParams() {
-  const cars = await fetchCars()
-  return cars.map((car) => ({ id: car.id }))
-}
+export const dynamic = 'force-dynamic'
 
 type Props = { params: Promise<{ id: string }> }
 
@@ -131,33 +126,32 @@ export default async function FeedCarDetailPage({ params }: Props) {
           </div>
 
           {/* ── Right column — sticky card ───────────────── */}
-          <div className="lg:sticky lg:top-24 flex flex-col gap-4">
+          <div className="lg:sticky lg:top-24 flex flex-col gap-3">
+
+            {/* Badges — outside card so they align with the photo top */}
+            {(car.isReserved || car.badges.length > 0) && (
+              <div className="flex flex-wrap gap-1.5">
+                {car.isReserved && (
+                  <span
+                    className="px-2.5 py-1 bg-amber text-white text-[11px] font-bold rounded-md uppercase tracking-wider"
+                    style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
+                  >
+                    Rezervované
+                  </span>
+                )}
+                {car.badges.map((b) => (
+                  <span
+                    key={b}
+                    className="px-2.5 py-1 bg-amber/10 border border-amber/20 text-amber text-[11px] font-semibold rounded-md"
+                    style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+                  >
+                    {b}
+                  </span>
+                ))}
+              </div>
+            )}
+
             <div className="bg-surface rounded-2xl p-6 border border-white/8">
-
-              {/* Reserved badge */}
-              {car.isReserved && (
-                <span
-                  className="inline-block px-2.5 py-1 mb-3 bg-amber text-white text-[11px] font-bold rounded-md uppercase tracking-wider"
-                  style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
-                >
-                  Rezervované
-                </span>
-              )}
-
-              {/* Badges */}
-              {car.badges.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {car.badges.map((b) => (
-                    <span
-                      key={b}
-                      className="px-2.5 py-1 bg-amber/10 border border-amber/20 text-amber text-[11px] font-semibold rounded-md"
-                      style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
-                    >
-                      {b}
-                    </span>
-                  ))}
-                </div>
-              )}
 
               {/* Title */}
               <h1
