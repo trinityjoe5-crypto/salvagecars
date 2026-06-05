@@ -3,6 +3,7 @@ import { Barlow_Condensed, Figtree } from 'next/font/google'
 import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { StickyCallButton } from '@/components/ui/StickyCallButton'
+import { ScrollRevealProvider } from '@/components/ui/ScrollRevealProvider'
 import { site } from '@/config/site'
 import './globals.css'
 
@@ -46,6 +47,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <StickyCallButton />
+        <ScrollRevealProvider />
       </body>
     </html>
   )

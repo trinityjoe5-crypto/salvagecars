@@ -34,7 +34,7 @@ export function HowItWorks() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
 
         {/* Section label */}
-        <div className="flex items-center gap-3 mb-4">
+        <div data-reveal className="flex items-center gap-3 mb-4">
           <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
           <span
             className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber"
@@ -44,7 +44,7 @@ export function HowItWorks() {
           </span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+        <div data-reveal data-reveal-delay="80" className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <h2
             id="how-it-works-heading"
             style={{
@@ -86,6 +86,8 @@ export function HowItWorks() {
           {steps.map((step, i) => (
             <div
               key={step.number}
+              data-reveal
+              data-reveal-delay={String(160 + i * 100)}
               className="relative bg-surface rounded-2xl p-7 border border-white/6"
             >
               {/* Connector line (not on last) */}

@@ -14,7 +14,7 @@ export const site = {
   year: 2026,
   nav: [
     { label: 'Domov', href: '/' },
-    { label: 'Ponuka vozidiel', href: '/ponuka' },
+    { label: 'Ponuka vozidiel', href: '/ponuka-vozidiel' },
     { label: 'Výkup', href: '/#vykup' },
     { label: 'Kontakt', href: '/#kontakt' },
   ],

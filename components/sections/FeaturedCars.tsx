@@ -16,7 +16,7 @@ export async function FeaturedCars() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
 
         {/* Header row */}
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-12">
+        <div data-reveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
@@ -60,7 +60,7 @@ export async function FeaturedCars() {
         </div>
 
         {/* Car grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div data-reveal data-reveal-delay="120" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((car) => (
             <FeedCarCard key={car.id} car={car} />
           ))}

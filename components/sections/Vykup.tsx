@@ -20,7 +20,7 @@ export function Vykup() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           {/* Left: Text */}
-          <div>
+          <div data-reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
               <span
@@ -96,7 +96,7 @@ export function Vykup() {
           </div>
 
           {/* Right: Benefits */}
-          <div className="grid grid-cols-1 gap-4">
+          <div data-reveal data-reveal-delay="150" className="grid grid-cols-1 gap-4">
             {[
               {
                 title: 'Rýchle vybavenie',

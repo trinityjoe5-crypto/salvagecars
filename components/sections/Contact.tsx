@@ -36,7 +36,7 @@ export function Contact() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
+        <div data-reveal className="flex items-center gap-3 mb-4">
           <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
           <span
             className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber"
@@ -46,7 +46,7 @@ export function Contact() {
           </span>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+        <div data-reveal data-reveal-delay="80" className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <h2
             id="contact-heading"
             style={{
@@ -62,7 +62,7 @@ export function Contact() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div data-reveal data-reveal-delay="160" className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
 
           {/* Contact info */}
           <div className="flex flex-col gap-6">
