@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface LogoProps {
   className?: string
@@ -6,11 +9,15 @@ interface LogoProps {
 }
 
 export function Logo({ className = '', size = 'md' }: LogoProps) {
+  const pathname = usePathname()
   const scale = size === 'sm' ? 0.8 : size === 'lg' ? 1.2 : 1
 
   return (
     <Link
       href="/"
+      onClick={() => {
+        if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
+      }}
       className={`inline-flex items-center gap-2.5 group select-none active:scale-95 transition-transform duration-150 ${className}`}
       aria-label="SalvageCars — domovská stránka"
     >
