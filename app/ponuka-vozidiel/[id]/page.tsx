@@ -42,7 +42,7 @@ export default async function FeedCarDetailPage({ params }: Props) {
     : 'Cena na vyžiadanie'
 
   return (
-    <div className="min-h-screen bg-graphite pt-20 pb-20 sm:pb-28 overflow-x-hidden">
+    <div className="min-h-screen bg-graphite pt-20 pb-20 sm:pb-28">
 
       {/* Breadcrumb */}
       <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-6">
@@ -139,7 +139,7 @@ export default async function FeedCarDetailPage({ params }: Props) {
           </div>
 
           {/* ── Right column — card is the direct grid item ── */}
-          <div className="lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8" style={{ alignSelf: 'start' }}>
+          <div className="lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
 
               {/* Reserved badge */}
               {car.isReserved && (
