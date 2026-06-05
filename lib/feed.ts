@@ -1,4 +1,3 @@
-import { XMLParser } from 'fast-xml-parser'
 import { FEED_URL } from './config'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -11,13 +10,12 @@ export interface FeedCar {
   model: string
   title: string
   content: string
-  contentExtend: string   // vehicle features / výbava
-  contentOptions: string  // generic sales conditions — shown collapsed
-  link: string            // original autobazar.sk URL
+  contentExtend: string
+  contentOptions: string
+  link: string
   isReserved: boolean
   timeCreated: string
   photos: string[]
-  // parsed params
   price: number
   year?: number
   mileageKm?: number
@@ -25,87 +23,89 @@ export interface FeedCar {
   transmissionLabel?: string
   powerKw?: number
   engineCc?: number
-  typeLabel?: string          // druh_value (Autokaravan, Karavan…)
+  typeLabel?: string
   bedCount?: number
   maxWeightLabel?: string
-  badges: string[]            // doplnujuce-udaje_value split by "|"
-  stateLabel?: string         // stav_value
+  badges: string[]
+  stateLabel?: string
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Helpers
+// Regex-based XML parser — no external dependencies, works in all envs
 // ─────────────────────────────────────────────────────────────────────────────
 
-function cdata(val: unknown): string {
-  if (val === null || val === undefined) return ''
-  if (typeof val === 'object' && '__cdata' in (val as Record<string, unknown>)) {
-    return String((val as Record<string, unknown>).__cdata ?? '')
+function getTag(xml: string, tag: string): string {
+  const re = new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`)
+  const m = xml.match(re)
+  if (!m) return ''
+  return (m[1] ?? m[2] ?? '').trim()
+}
+
+function getTagAll(xml: string, tag: string): string[] {
+  const re = new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`, 'g')
+  const results: string[] = []
+  let m: RegExpExecArray | null
+  while ((m = re.exec(xml)) !== null) {
+    const val = (m[1] ?? m[2] ?? '').trim()
+    if (val) results.push(val)
   }
-  return String(val)
+  return results
 }
 
-function cdataInt(val: unknown): number | undefined {
-  const s = cdata(val).trim()
+function getBlock(xml: string, tag: string): string {
+  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`)
+  const m = xml.match(re)
+  return m ? m[0] : ''
+}
+
+function getBlockAll(xml: string, tag: string): string[] {
+  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, 'g')
+  const results: string[] = []
+  let m: RegExpExecArray | null
+  while ((m = re.exec(xml)) !== null) {
+    results.push(m[0])
+  }
+  return results
+}
+
+function toInt(s: string): number | undefined {
   if (!s || s === '-1' || s === '0') return undefined
   const n = parseInt(s, 10)
   return isNaN(n) ? undefined : n
 }
 
-function cdataStr(val: unknown): string | undefined {
-  const s = cdata(val).trim()
-  return s || undefined
-}
+function parseAd(xml: string): FeedCar {
+  const params = getBlock(xml, 'params')
+  const photosBlock = getBlock(xml, 'photos')
+  const photos = getTagAll(photosBlock, 'photo')
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Parser
-// ─────────────────────────────────────────────────────────────────────────────
-
-const parser = new XMLParser({
-  ignoreAttributes: false,
-  cdataPropName: '__cdata',
-  isArray: (name) => ['advertisement', 'photo'].includes(name),
-})
-
-function parseAd(ad: Record<string, unknown>): FeedCar {
-  const p = (ad.params ?? {}) as Record<string, unknown>
-
-  const photosObj = (ad.photos ?? {}) as Record<string, unknown>
-  const rawPhotos = Array.isArray(photosObj.photo)
-    ? (photosObj.photo as unknown[])
-    : photosObj.photo
-    ? [photosObj.photo]
-    : []
-  const photos = rawPhotos.map(cdata).filter(Boolean)
-
-  const badgeRaw = cdata(p['doplnujuce-udaje_value'])
-  const badges = badgeRaw
-    ? badgeRaw.split('|').map((b) => b.trim()).filter(Boolean)
-    : []
+  const badgeRaw = getTag(params, 'doplnujuce-udaje_value')
+  const badges = badgeRaw ? badgeRaw.split('|').map(b => b.trim()).filter(Boolean) : []
 
   return {
-    id: cdata(ad.idAdvertisement),
-    brand: cdata(ad.brand),
-    model: cdata(ad.model),
-    title: cdata(ad.title),
-    content: cdata(ad.content),
-    contentExtend: cdata(ad.contentExtend),
-    contentOptions: cdata(ad.contentOptions),
-    link: cdata(ad.link),
-    isReserved: cdata(ad.isReserved) === 'true',
-    timeCreated: cdata(ad.timeCreated),
+    id: getTag(xml, 'idAdvertisement'),
+    brand: getTag(xml, 'brand'),
+    model: getTag(xml, 'model'),
+    title: getTag(xml, 'title'),
+    content: getTag(xml, 'content'),
+    contentExtend: getTag(xml, 'contentExtend'),
+    contentOptions: getTag(xml, 'contentOptions'),
+    link: getTag(xml, 'link'),
+    isReserved: getTag(xml, 'isReserved') === 'true',
+    timeCreated: getTag(xml, 'timeCreated'),
     photos,
-    price: parseInt(cdata(p.cena), 10) || 0,
-    year: cdataInt(p.rok),
-    mileageKm: cdataInt(p['najazdene-km']),
-    fuelLabel: cdataStr(p.palivo_value),
-    transmissionLabel: cdataStr(p.prevodovka_value),
-    powerKw: cdataInt(p['vykon-motora']),
-    engineCc: cdataInt(p['objem-motora']),
-    typeLabel: cdataStr(p.druh_value),
-    bedCount: cdataInt(p['pocet-lozok']),
-    maxWeightLabel: cdataStr(p['maximalna-hmotnost_value']),
+    price: parseInt(getTag(params, 'cena'), 10) || 0,
+    year: toInt(getTag(params, 'rok')),
+    mileageKm: toInt(getTag(params, 'najazdene-km')),
+    fuelLabel: getTag(params, 'palivo_value') || undefined,
+    transmissionLabel: getTag(params, 'prevodovka_value') || undefined,
+    powerKw: toInt(getTag(params, 'vykon-motora')),
+    engineCc: toInt(getTag(params, 'objem-motora')),
+    typeLabel: getTag(params, 'druh_value') || undefined,
+    bedCount: toInt(getTag(params, 'pocet-lozok')),
+    maxWeightLabel: getTag(params, 'maximalna-hmotnost_value') || undefined,
     badges,
-    stateLabel: cdataStr(p.stav_value),
+    stateLabel: getTag(params, 'stav_value') || undefined,
   }
 }
 
@@ -123,17 +123,21 @@ export async function fetchCars(): Promise<FeedCar[]> {
     })
 
     if (!res.ok) {
-      console.error(`[feed] HTTP ${res.status} from feed URL`)
+      console.error(`[feed] HTTP ${res.status}`)
       return []
     }
 
     const xml = await res.text()
-    const parsed = parser.parse(xml)
-    const ads: unknown[] = parsed?.advertisements?.advertisement ?? []
+    const adBlocks = getBlockAll(xml, 'advertisement')
 
-    return ads.map((ad) => parseAd(ad as Record<string, unknown>))
+    if (adBlocks.length === 0) {
+      console.error('[feed] no <advertisement> blocks found, raw start:', xml.slice(0, 100))
+      return []
+    }
+
+    return adBlocks.map(parseAd)
   } catch (err) {
-    console.error('[feed] fetch/parse error:', err)
+    console.error('[feed] error:', err)
     return []
   }
 }
