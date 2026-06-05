@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCars, getCarById } from '@/lib/cars'
+import { GalleryClient } from '@/components/cars/GalleryClient'
 import { site } from '@/config/site'
 import type { Car } from '@/types/car'
 
@@ -75,40 +75,7 @@ export default async function CarDetailPage({ params }: Props) {
 
           {/* Gallery — always first */}
           <div className="order-1 lg:col-start-1 lg:row-start-1 min-w-0">
-
-            {/* Main image */}
-            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-graphite-600 mb-4">
-              <Image
-                src={car.images[0]}
-                alt={car.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 65vw"
-                className="object-cover"
-                priority
-                unoptimized
-              />
-            </div>
-
-            {/* Thumbnail gallery (if >1 image) */}
-            {car.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                {car.images.map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative shrink-0 w-20 h-14 rounded-lg overflow-hidden bg-graphite-600 border border-white/10"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${car.title} — foto ${i + 1}`}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+            <GalleryClient photos={car.images} title={car.title} />
           </div>
 
           {/* Right column — 2nd on mobile, sticky right on desktop */}

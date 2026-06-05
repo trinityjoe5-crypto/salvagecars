@@ -88,6 +88,36 @@ export function GalleryClient({ photos, title }: Props) {
           </span>
         )}
       </div>
+
+      {/* Thumbnail strip */}
+      {photos.length > 1 && (
+        <div className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
+          {photos.map((src, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              aria-label={`Fotka ${i + 1}`}
+              aria-pressed={i === active}
+              className={`
+                relative shrink-0 rounded-lg overflow-hidden border-2
+                transition-[border-color,opacity] duration-150
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
+                ${i === active
+                  ? 'border-amber opacity-100'
+                  : 'border-transparent opacity-55 hover:opacity-85 hover:border-white/25'}
+              `}
+              style={{ width: 80, height: 56 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={`${title} — náhľad ${i + 1}`}
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </>
   )
 }
