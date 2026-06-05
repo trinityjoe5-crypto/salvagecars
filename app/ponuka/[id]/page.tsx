@@ -51,7 +51,7 @@ export default async function CarDetailPage({ params }: Props) {
     <div className="min-h-screen bg-graphite pt-20 pb-20 sm:pb-28">
 
       {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-8 pb-6">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-2 lg:pt-8 pb-6">
         <nav
           className="flex items-center gap-2 text-[13px] text-white/35"
           style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
