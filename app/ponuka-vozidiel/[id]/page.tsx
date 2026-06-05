@@ -60,10 +60,11 @@ export default async function FeedCarDetailPage({ params }: Props) {
       </div>
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10" style={{ alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10"
+             style={{ alignItems: 'start' }}>
 
           {/* ── Left column ─────────────────────────────── */}
-          <div className="min-w-0" style={{ alignSelf: 'start' }}>
+          <div className="min-w-0">
 
             {/* Gallery */}
             <GalleryClient photos={car.photos} title={car.title} />
