@@ -38,7 +38,10 @@ export function Hero() {
         <div className="max-w-2xl">
 
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2.5 mb-7">
+          <div
+            className="hero-reveal inline-flex items-center gap-2.5 mb-7"
+            style={{ animationDelay: '0ms' }}
+          >
             <span className="h-[2px] w-8 bg-amber" aria-hidden="true" />
             <span
               className="text-[12px] font-semibold uppercase tracking-[0.2em] text-amber"
@@ -48,9 +51,10 @@ export function Hero() {
             </span>
           </div>
 
-          {/* Main heading — no animation, visible immediately */}
+          {/* Main heading */}
           <h1
             id="hero-heading"
+            className="hero-reveal"
             style={{
               fontFamily: 'var(--font-barlow), sans-serif',
               fontWeight: 800,
@@ -58,6 +62,7 @@ export function Hero() {
               lineHeight: 0.95,
               letterSpacing: '-0.03em',
               color: '#ffffff',
+              animationDelay: '120ms',
             }}
           >
             VÝKUP &amp;{' '}
@@ -70,15 +75,15 @@ export function Hero() {
 
           {/* Sub */}
           <p
-            className="mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
-            style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+            className="hero-reveal mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
+            style={{ fontFamily: 'var(--font-figtree), sans-serif', animationDelay: '280ms' }}
           >
             Kupujeme a predávame vraky, havarované a poškodené autá na Slovensku.
             Férová cena, rýchle vybavenie, bez komplikácií.
           </p>
 
           {/* CTAs */}
-          <div className="flex gap-3 mt-9">
+          <div className="hero-reveal flex gap-3 mt-9" style={{ animationDelay: '400ms' }}>
             <Link
               href="/ponuka-vozidiel"
               className="
@@ -120,7 +125,7 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div className="flex flex-wrap gap-6 mt-16 sm:mt-12">
+          <div className="hero-reveal flex flex-wrap gap-6 mt-16 sm:mt-12" style={{ animationDelay: '520ms' }}>
             {[
               { value: '6+', label: 'rokov na trhu' },
               { value: '150+', label: 'vozidiel ročne' },
