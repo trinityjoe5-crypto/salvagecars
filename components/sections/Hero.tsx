@@ -120,7 +120,7 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div className="flex flex-wrap gap-6 mt-16">
+          <div className="flex flex-wrap gap-6 mt-16 sm:mt-12">
             {[
               { value: '6+', label: 'rokov na trhu' },
               { value: '150+', label: 'vozidiel ročne' },
@@ -128,13 +128,13 @@ export function Hero() {
             ].map(({ value, label }) => (
               <div key={label} className="flex flex-col">
                 <span
-                  className="text-[34px] font-black text-white leading-none"
+                  className="text-[34px] sm:text-[28px] font-black text-white leading-none"
                   style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.03em' }}
                 >
                   {value}
                 </span>
                 <span
-                  className="text-[13px] text-white/40 mt-1"
+                  className="text-[13px] sm:text-[12px] text-white/40 mt-1 sm:mt-0.5"
                   style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
                 >
                   {label}
@@ -147,7 +147,7 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1.5 opacity-30">
