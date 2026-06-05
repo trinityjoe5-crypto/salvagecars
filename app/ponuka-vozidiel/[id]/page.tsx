@@ -63,7 +63,7 @@ export default async function FeedCarDetailPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 items-start">
 
           {/* ── Left column ─────────────────────────────── */}
-          <div>
+          <div className="self-start min-w-0">
 
             {/* Gallery */}
             <GalleryClient photos={car.photos} title={car.title} />
@@ -138,7 +138,7 @@ export default async function FeedCarDetailPage({ params }: Props) {
           </div>
 
           {/* ── Right column — card is the direct grid item ── */}
-          <div className="lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
+          <div className="self-start lg:sticky lg:top-24 bg-surface rounded-2xl p-6 border border-white/8">
 
               {/* Reserved badge */}
               {car.isReserved && (
