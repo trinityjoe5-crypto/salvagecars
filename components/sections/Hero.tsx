@@ -108,7 +108,7 @@ export function Hero() {
               href={`tel:${site.phone.replace(/\s/g, '')}`}
               className="
                 flex-1 sm:flex-none inline-flex items-center justify-center gap-2
-                text-[14px] sm:text-[16px]
+                text-[15px] sm:text-[16px]
                 px-4 py-3.5 sm:px-7 sm:py-4 text-white font-semibold rounded-xl
                 border border-white/20
                 hover:bg-white/8 hover:border-white/30 active:scale-[0.97]
