@@ -83,8 +83,8 @@ export function Hero() {
               href="/ponuka-vozidiel"
               className="
                 flex-1 sm:flex-none inline-flex items-center justify-center gap-2
-                text-[13px] sm:text-[16px]
-                px-4 py-3 sm:px-7 sm:py-4 bg-amber text-white font-bold rounded-xl
+                text-[14px] sm:text-[16px]
+                px-4 py-3.5 sm:px-7 sm:py-4 bg-amber text-white font-bold rounded-xl
                 hover:bg-amber-600 active:scale-[0.97]
                 transition-[background-color,transform,box-shadow] duration-200
                 shadow-[0_4px_20px_rgba(232,135,12,0.35)]
@@ -103,8 +103,8 @@ export function Hero() {
               href={`tel:${site.phone.replace(/\s/g, '')}`}
               className="
                 flex-1 sm:flex-none inline-flex items-center justify-center gap-2
-                text-[13px] sm:text-[16px]
-                px-4 py-3 sm:px-7 sm:py-4 text-white font-semibold rounded-xl
+                text-[14px] sm:text-[16px]
+                px-4 py-3.5 sm:px-7 sm:py-4 text-white font-semibold rounded-xl
                 border border-white/20
                 hover:bg-white/8 hover:border-white/30 active:scale-[0.97]
                 transition-[background-color,border-color,transform] duration-200
