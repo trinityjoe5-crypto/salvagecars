@@ -30,9 +30,9 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
         src="/7D756145-2940-404C-B0B5-C5F38869C367-removebg-preview.png"
         alt=""
         aria-hidden="true"
-        width={Math.round(56 * scale)}
-        height={Math.round(49 * scale)}
-        style={{ objectFit: 'contain', width: Math.round(56 * scale), height: Math.round(49 * scale), flexShrink: 0 }}
+        width={Math.round(70 * scale)}
+        height={Math.round(61 * scale)}
+        style={{ objectFit: 'contain', width: Math.round(70 * scale), height: Math.round(61 * scale), flexShrink: 0 }}
         priority
         unoptimized
       />
