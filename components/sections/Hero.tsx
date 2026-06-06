@@ -126,7 +126,7 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div className="hero-reveal flex flex-wrap gap-6 mt-16 sm:mt-12" style={{ animationDelay: '700ms' }}>
+          <div className="hero-reveal flex gap-4 sm:gap-6 mt-16 sm:mt-12" style={{ animationDelay: '700ms' }}>
             <CountUp target={6}   suffix="+" label="rokov na trhu"               delay={850} />
             <CountUp target={150} suffix="+" label="vozidiel ročne"              delay={850} />
             <CountUp target={100} suffix="%" label="férovosť & transparentnosť" delay={850} />
