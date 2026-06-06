@@ -11,7 +11,7 @@ interface LogoProps {
 
 export function Logo({ className = '', size = 'md' }: LogoProps) {
   const pathname = usePathname()
-  const height = size === 'sm' ? 34 : size === 'lg' ? 52 : 42
+  const scale = size === 'sm' ? 0.8 : size === 'lg' ? 1.2 : 1
 
   return (
     <Link
@@ -19,18 +19,46 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
       onClick={() => {
         if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
       }}
-      className={`inline-flex items-center select-none active:scale-95 transition-transform duration-150 ${className}`}
+      className={`inline-flex items-center gap-2 select-none active:scale-95 transition-transform duration-150 ${className}`}
       aria-label="Damage Auto — domovská stránka"
     >
+      {/* Car icon */}
       <Image
-        src="/9DAE4401-8F4F-4A1C-942A-1E8F7B82072A.PNG"
-        alt="Damage Auto"
-        height={height}
-        width={height}
-        style={{ objectFit: 'contain', height, width: 'auto' }}
+        src="/7D756145-2940-404C-B0B5-C5F38869C367-removebg-preview.png"
+        alt=""
+        aria-hidden="true"
+        width={Math.round(44 * scale)}
+        height={Math.round(44 * scale)}
+        style={{ objectFit: 'contain', width: Math.round(44 * scale), height: Math.round(44 * scale) }}
         priority
         unoptimized
       />
+
+      {/* Text stack */}
+      <span className="leading-none flex flex-col">
+        <span
+          className="block font-black text-white leading-none tracking-tight"
+          style={{
+            fontFamily: 'var(--font-barlow), sans-serif',
+            fontSize: 20 * scale,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          DAMAGE
+        </span>
+        <span
+          className="block font-semibold leading-none"
+          style={{
+            fontFamily: 'var(--font-barlow), sans-serif',
+            fontSize: 10 * scale,
+            letterSpacing: '0.22em',
+            color: '#E8870C',
+            marginTop: 2 * scale,
+          }}
+        >
+          AUTO
+        </span>
+      </span>
     </Link>
   )
 }
