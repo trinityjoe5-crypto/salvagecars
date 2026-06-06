@@ -41,7 +41,7 @@ export function Hero() {
           {/* Eyebrow */}
           <div
             className="hero-reveal inline-flex items-center gap-2.5 mb-7"
-            style={{ animationDelay: '0ms' }}
+            style={{ animationDelay: '100ms' }}
           >
             <span className="h-[2px] w-8 bg-amber" aria-hidden="true" />
             <span
@@ -63,7 +63,7 @@ export function Hero() {
               lineHeight: 0.95,
               letterSpacing: '-0.03em',
               color: '#ffffff',
-              animationDelay: '120ms',
+              animationDelay: '250ms',
             }}
           >
             VÝKUP &amp;{' '}
@@ -77,14 +77,14 @@ export function Hero() {
           {/* Sub */}
           <p
             className="hero-reveal mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
-            style={{ fontFamily: 'var(--font-figtree), sans-serif', animationDelay: '280ms' }}
+            style={{ fontFamily: 'var(--font-figtree), sans-serif', animationDelay: '420ms' }}
           >
             Kupujeme a predávame vraky, havarované a poškodené autá na Slovensku.
             Férová cena, rýchle vybavenie, bez komplikácií.
           </p>
 
           {/* CTAs */}
-          <div className="hero-reveal flex gap-3 mt-9" style={{ animationDelay: '400ms' }}>
+          <div className="hero-reveal flex gap-3 mt-9" style={{ animationDelay: '560ms' }}>
             <Link
               href="/ponuka-vozidiel"
               className="
@@ -126,10 +126,10 @@ export function Hero() {
           </div>
 
           {/* Trust row */}
-          <div className="hero-reveal flex flex-wrap gap-6 mt-16 sm:mt-12" style={{ animationDelay: '520ms' }}>
-            <CountUp target={6}   suffix="+" label="rokov na trhu"               delay={650} />
-            <CountUp target={150} suffix="+" label="vozidiel ročne"              delay={650} />
-            <CountUp target={100} suffix="%" label="férovosť & transparentnosť" delay={650} />
+          <div className="hero-reveal flex flex-wrap gap-6 mt-16 sm:mt-12" style={{ animationDelay: '700ms' }}>
+            <CountUp target={6}   suffix="+" label="rokov na trhu"               delay={850} />
+            <CountUp target={150} suffix="+" label="vozidiel ročne"              delay={850} />
+            <CountUp target={100} suffix="%" label="férovosť & transparentnosť" delay={850} />
           </div>
         </div>
       </div>
