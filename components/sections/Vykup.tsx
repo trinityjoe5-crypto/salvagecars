@@ -6,11 +6,13 @@ import { useTranslation } from '@/lib/i18n'
 export function Vykup() {
   const { t } = useTranslation()
 
-  const benefits = [
-    { title: t.vykup.b1title, description: t.vykup.b1desc },
-    { title: t.vykup.b2title, description: t.vykup.b2desc },
-    { title: t.vykup.b3title, description: t.vykup.b3desc },
-    { title: t.vykup.b4title, description: t.vykup.b4desc },
+  const buyList = [
+    t.vykup.buy1,
+    t.vykup.buy2,
+    t.vykup.buy3,
+    t.vykup.buy4,
+    t.vykup.buy5,
+    t.vykup.buy6,
   ]
 
   return (
@@ -21,6 +23,7 @@ export function Vykup() {
       <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
+          {/* Left: Text */}
           <div data-reveal>
             <div className="flex items-center gap-3 mb-4">
               <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
@@ -36,7 +39,7 @@ export function Vykup() {
               <span style={{ color: '#E8870C' }}>{t.vykup.titleAccent}</span>
             </h2>
 
-            <p className="text-[15px] text-white/55 leading-[1.7] max-w-[460px] mb-8" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>
+            <p className="text-[15px] text-white/55 leading-[1.75] max-w-[460px] mb-8" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>
               {t.vykup.desc}
             </p>
 
@@ -75,20 +78,34 @@ export function Vykup() {
             </div>
           </div>
 
-          <div data-reveal data-reveal-delay="80" className="grid grid-cols-1 gap-4">
-            {benefits.map(({ title, description }) => (
-              <div key={title} className="flex gap-4 p-5 bg-surface/60 rounded-xl border border-white/6 hover:border-amber/20 transition-colors duration-300">
-                <span className="shrink-0 mt-0.5 w-6 h-6 rounded-full bg-amber/15 border border-amber/30 flex items-center justify-center">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 13l4 4L19 7" stroke="#E8870C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-                <div>
-                  <p className="text-[15px] font-bold text-white mb-1" style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '-0.01em' }}>{title}</p>
-                  <p className="text-[13px] text-white/45 leading-relaxed" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>{description}</p>
+          {/* Right: Buy checklist */}
+          <div data-reveal data-reveal-delay="80">
+            <p
+              className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber mb-5"
+              style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
+            >
+              {t.vykup.buyListTitle}
+            </p>
+            <div className="flex flex-col gap-3">
+              {buyList.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-4 px-5 py-4 bg-surface/60 rounded-xl border border-white/6 hover:border-amber/25 transition-colors duration-200"
+                >
+                  <span className="shrink-0 w-7 h-7 rounded-full bg-amber/15 border border-amber/30 flex items-center justify-center">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M5 13l4 4L19 7" stroke="#E8870C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                  <span
+                    className="text-[15px] font-semibold text-white"
+                    style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
+                  >
+                    {item}
+                  </span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
         </div>
