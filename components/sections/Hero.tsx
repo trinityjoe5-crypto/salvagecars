@@ -60,7 +60,7 @@ export function Hero() {
             style={{
               fontFamily: 'var(--font-barlow), sans-serif',
               fontWeight: 800,
-              fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+              fontSize: 'clamp(3.45rem, 9.2vw, 6.3rem)',
               lineHeight: 0.95,
               letterSpacing: '-0.03em',
               color: '#ffffff',
