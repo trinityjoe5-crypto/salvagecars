@@ -4,16 +4,51 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Logo } from './Logo'
 import { site } from '@/config/site'
+import { useTranslation, LANGS, type Lang } from '@/lib/i18n'
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { lang, setLang, t } = useTranslation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const navItems = [
+    { href: '/',                 label: t.nav.home },
+    { href: '/ponuka-vozidiel',  label: t.nav.listings },
+    { href: '/#vykup',           label: t.nav.buyout },
+    { href: '/#kontakt',         label: t.nav.contact },
+  ]
+
+  function LangSwitcher({ mobile = false }: { mobile?: boolean }) {
+    return (
+      <div className={`flex items-center gap-1 ${mobile ? 'px-4 pt-2 pb-1' : ''}`}>
+        {LANGS.map(({ code, label, flag }) => (
+          <button
+            key={code}
+            onClick={() => setLang(code as Lang)}
+            className={`
+              flex items-center gap-1 px-2 py-1 rounded-md text-[12px] font-semibold
+              transition-[background-color,color] duration-150
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
+              ${lang === code
+                ? 'bg-amber/15 text-amber'
+                : 'text-white/40 hover:text-white/70 hover:bg-white/6'}
+            `}
+            style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '0.05em' }}
+            aria-pressed={lang === code}
+          >
+            <span>{flag}</span>
+            <span>{label}</span>
+          </button>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <header
@@ -31,7 +66,7 @@ export function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1" aria-label="Hlavná navigácia">
-          {site.nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -48,10 +83,15 @@ export function Header() {
             </Link>
           ))}
 
+          {/* Language switcher */}
+          <div className="ml-2 flex items-center gap-0.5 border-l border-white/10 pl-3">
+            <LangSwitcher />
+          </div>
+
           <a
             href={`tel:${site.phone.replace(/\s/g, '')}`}
             className="
-              ml-4 flex items-center gap-2 px-4 py-2
+              ml-3 flex items-center gap-2 px-4 py-2
               bg-amber text-white text-[14px] font-bold rounded-lg
               hover:bg-amber-600 active:scale-95
               transition-[background-color,transform] duration-150
@@ -97,13 +137,12 @@ export function Header() {
         className={`
           md:hidden overflow-hidden
           transition-[max-height,opacity] duration-300 ease-in-out
-          bg-graphite-800
-          border-t border-white/6
-          ${open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}
+          bg-graphite-800 border-t border-white/6
+          ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
         `}
       >
         <nav className="px-5 py-4 flex flex-col gap-1" aria-label="Mobilná navigácia">
-          {site.nav.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -118,6 +157,10 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+
+          {/* Language switcher mobile */}
+          <LangSwitcher mobile />
+
           <a
             href={`tel:${site.phone.replace(/\s/g, '')}`}
             onClick={() => setOpen(false)}

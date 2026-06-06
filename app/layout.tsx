@@ -4,6 +4,7 @@ import { Header } from '@/components/ui/Header'
 import { Footer } from '@/components/ui/Footer'
 import { StickyCallButton } from '@/components/ui/StickyCallButton'
 import { ScrollRevealProvider } from '@/components/ui/ScrollRevealProvider'
+import { LanguageProvider } from '@/lib/i18n'
 import { site } from '@/config/site'
 import './globals.css'
 
@@ -43,11 +44,13 @@ export default function RootLayout({
       className={`${barlowCondensed.variable} ${figtree.variable} h-full`}
     >
       <body className="min-h-full flex flex-col antialiased">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <StickyCallButton />
-        <ScrollRevealProvider />
+        <LanguageProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <StickyCallButton />
+          <ScrollRevealProvider />
+        </LanguageProvider>
       </body>
     </html>
   )

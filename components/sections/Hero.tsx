@@ -1,8 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { site } from '@/config/site'
 import { CountUp } from '@/components/ui/CountUp'
+import { useTranslation } from '@/lib/i18n'
 
 export function Hero() {
+  const { t } = useTranslation()
+
   return (
     <section
       className="relative sm:min-h-screen flex flex-col justify-start sm:justify-center pt-16 overflow-hidden bg-graphite"
@@ -17,8 +22,6 @@ export function Hero() {
           backgroundSize: '28px 28px',
         }}
       />
-
-      {/* Radial vignette to fade the dot grid at edges */}
       <div
         className="absolute inset-0"
         aria-hidden="true"
@@ -26,8 +29,6 @@ export function Hero() {
           background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, #2B2D31 100%)',
         }}
       />
-
-      {/* Amber glow accent */}
       <div
         className="absolute -top-40 -right-40 w-[600px] h-[600px] pointer-events-none"
         aria-hidden="true"
@@ -48,7 +49,7 @@ export function Hero() {
               className="text-[12px] font-semibold uppercase tracking-[0.2em] text-amber"
               style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
             >
-              Slovensko — najlepšie ceny
+              {t.hero.eyebrow}
             </span>
           </div>
 
@@ -66,12 +67,12 @@ export function Hero() {
               animationDelay: '250ms',
             }}
           >
-            VÝKUP &amp;{' '}
-            <span style={{ color: '#E8870C' }}>PREDAJ</span>
+            {t.hero.titleLine1}{' '}
+            <span style={{ color: '#E8870C' }}>{t.hero.titleLine2}</span>
             <br />
-            HAVAROVANÝCH
+            {t.hero.titleLine3}
             <br />
-            VOZIDIEL
+            {t.hero.titleLine4}
           </h1>
 
           {/* Sub */}
@@ -79,8 +80,7 @@ export function Hero() {
             className="hero-reveal mt-7 text-[16px] sm:text-[17px] text-white/60 leading-[1.65] max-w-[500px]"
             style={{ fontFamily: 'var(--font-figtree), sans-serif', animationDelay: '420ms' }}
           >
-            Kupujeme a predávame vraky, havarované a poškodené autá na Slovensku.
-            Férová cena, rýchle vybavenie, bez komplikácií.
+            {t.hero.subtitle}
           </p>
 
           {/* CTAs */}
@@ -99,7 +99,7 @@ export function Hero() {
               "
               style={{ fontFamily: 'var(--font-barlow), sans-serif', letterSpacing: '0.04em' }}
             >
-              ZOBRAZIŤ PONUKU
+              {t.hero.ctaListings}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="shrink-0">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -127,9 +127,9 @@ export function Hero() {
 
           {/* Trust row */}
           <div className="hero-reveal flex gap-4 sm:gap-6 mt-16 sm:mt-12" style={{ animationDelay: '700ms' }}>
-            <CountUp target={6}   suffix="+" label="rokov na trhu"               delay={850} />
-            <CountUp target={150} suffix="+" label="vozidiel ročne"              delay={850} />
-            <CountUp target={100} suffix="%" label="férovosť & transparentnosť" delay={850} />
+            <CountUp target={6}   suffix="+" label={t.hero.stat1} delay={850} />
+            <CountUp target={150} suffix="+" label={t.hero.stat2} delay={850} />
+            <CountUp target={100} suffix="%" label={t.hero.stat3} delay={850} />
           </div>
         </div>
       </div>

@@ -1,72 +1,55 @@
-import Link from 'next/link'
-import { fetchCars } from '@/lib/feed'
-import { FeedCarCard } from '@/components/cars/FeedCarCard'
+'use client'
 
-export async function FeaturedCars() {
-  const featured = (await fetchCars()).slice(0, 3)
+import Link from 'next/link'
+import { FeedCarCard } from '@/components/cars/FeedCarCard'
+import { useTranslation } from '@/lib/i18n'
+import type { FeedCar } from '@/lib/feed'
+
+interface Props { cars: FeedCar[] }
+
+export function FeaturedCars({ cars }: Props) {
+  const { t } = useTranslation()
 
   return (
-    <section
-      className="relative bg-graphite-800 py-20 sm:py-28"
-      aria-labelledby="featured-cars-heading"
-    >
-      {/* Amber accent line */}
+    <section className="relative bg-graphite-800 py-20 sm:py-28" aria-labelledby="featured-cars-heading">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-amber/30 to-transparent" aria-hidden="true" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
 
-        {/* Header row */}
         <div data-reveal className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
               <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
-              <span
-                className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber"
-                style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
-              >
-                Z našej ponuky
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-amber" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+                {t.featured.label}
               </span>
             </div>
             <h2
               id="featured-cars-heading"
-              style={{
-                fontFamily: 'var(--font-barlow), sans-serif',
-                fontWeight: 700,
-                fontSize: 'clamp(2rem, 4vw, 2.75rem)',
-                letterSpacing: '-0.025em',
-                color: '#ffffff',
-                lineHeight: 1.1,
-              }}
+              style={{ fontFamily: 'var(--font-barlow), sans-serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 2.75rem)', letterSpacing: '-0.025em', color: '#ffffff', lineHeight: 1.1 }}
             >
-              Aktuálne <span style={{ color: '#E8870C' }}>vozidlá</span>
+              {t.featured.heading1} <span style={{ color: '#E8870C' }}>{t.featured.heading2}</span>
             </h2>
           </div>
 
           <Link
             href="/ponuka-vozidiel"
-            className="
-              shrink-0 self-start sm:self-auto
-              inline-flex items-center gap-2 text-[14px] font-semibold text-white/60
-              hover:text-amber transition-colors duration-200
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 rounded
-            "
+            className="shrink-0 self-start sm:self-auto inline-flex items-center gap-2 text-[14px] font-semibold text-white/60 hover:text-amber transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 rounded"
             style={{ fontFamily: 'var(--font-figtree), sans-serif' }}
           >
-            Zobraziť všetky
+            {t.featured.cta}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
         </div>
 
-        {/* Car grid */}
         <div data-reveal data-reveal-delay="60" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {featured.map((car) => (
+          {cars.map((car) => (
             <FeedCarCard key={car.id} car={car} />
           ))}
         </div>
 
-        {/* "View all" CTA */}
         <div className="mt-10 flex justify-center">
           <Link
             href="/ponuka-vozidiel"
@@ -80,7 +63,7 @@ export async function FeaturedCars() {
             "
             style={{ fontFamily: 'var(--font-barlow), sans-serif', fontSize: '15px', letterSpacing: '0.03em' }}
           >
-            CELÁ PONUKA VOZIDIEL
+            {t.listings.viewAll}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
