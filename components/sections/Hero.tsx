@@ -134,9 +134,9 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — desktop only */}
       <div
-        className="absolute bottom-3 left-1/2 -translate-x-1/2"
+        className="hidden sm:block absolute bottom-3 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
         <div className="flex flex-col items-center gap-1.5 opacity-30">
