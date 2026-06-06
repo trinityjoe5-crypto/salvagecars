@@ -7,7 +7,7 @@ export const site = {
     'Kupujeme a predávame vraky, havarované a poškodené vozidlá na Slovensku za najlepšie ceny.',
   phone: '+421 900 123 456',          // TODO: replace with real number
   phoneDisplay: '+421 900 123 456',
-  email: 'info@salvagecars.sk',       // TODO: replace with real email
+  email: 'info@damageauto.eu',
   address: '— doplniť adresu —',      // TODO: replace with real address
   ico: '— doplniť IČO —',
   dic: '— doplniť DIČ —',
