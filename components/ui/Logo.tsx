@@ -19,7 +19,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
         if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
       }}
       className={`inline-flex items-center gap-2.5 group select-none active:scale-95 transition-transform duration-150 ${className}`}
-      aria-label="SalvageCars — domovská stránka"
+      aria-label="Damage Auto — domovská stránka"
     >
       {/* Diamond mark */}
       <span
@@ -70,7 +70,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
             letterSpacing: '-0.02em',
           }}
         >
-          SALVAGE
+          DAMAGE
         </span>
         <span
           className="block font-semibold leading-none"
@@ -82,7 +82,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
             marginTop: 2 * scale,
           }}
         >
-          CARS
+          AUTO
         </span>
       </span>
     </Link>
