@@ -5,7 +5,7 @@ import { CountUp } from '@/components/ui/CountUp'
 export function Hero() {
   return (
     <section
-      className="relative min-h-[88vh] sm:min-h-screen flex flex-col justify-start sm:justify-center pt-16 overflow-hidden bg-graphite"
+      className="relative sm:min-h-screen flex flex-col justify-start sm:justify-center pt-16 overflow-hidden bg-graphite"
       aria-labelledby="hero-heading"
     >
       {/* Dot grid texture */}
