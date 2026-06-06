@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 interface Props {
   photos: string[]
@@ -19,7 +20,7 @@ export function GalleryClient({ photos, title }: Props) {
   const next = useCallback(() =>
     setActive((i) => (i + 1) % photos.length), [photos.length])
 
-  // Auto-scroll strip when active changes
+  // Auto-scroll thumbnail strip
   useEffect(() => {
     const strip = stripRef.current
     const thumb = thumbRefs.current[active]
@@ -33,14 +34,14 @@ export function GalleryClient({ photos, title }: Props) {
     }
   }, [active, photos.length])
 
-  // Keyboard + body scroll lock for lightbox
+  // Keyboard nav + body scroll lock
   useEffect(() => {
     if (!lightbox) return
     document.body.style.overflow = 'hidden'
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape')      setLightbox(false)
-      if (e.key === 'ArrowLeft')   prev()
-      if (e.key === 'ArrowRight')  next()
+      if (e.key === 'Escape')     setLightbox(false)
+      if (e.key === 'ArrowLeft')  prev()
+      if (e.key === 'ArrowRight') next()
     }
     document.addEventListener('keydown', onKey)
     return () => {
@@ -61,7 +62,7 @@ export function GalleryClient({ photos, title }: Props) {
 
   return (
     <>
-      {/* ── Main photo ─────────────────────────────────────────── */}
+      {/* ── Main photo ─────────────────────────────────────── */}
       <div
         className="relative w-full rounded-2xl overflow-hidden bg-graphite-600 border border-white/8 cursor-zoom-in"
         style={{ aspectRatio: '16/9' }}
@@ -74,12 +75,11 @@ export function GalleryClient({ photos, title }: Props) {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
 
-        {/* Prev */}
         {photos.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); prev() }}
             aria-label="Predchádzajúca fotka"
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-graphite-800/70 hover:bg-graphite-800/90 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -87,12 +87,11 @@ export function GalleryClient({ photos, title }: Props) {
           </button>
         )}
 
-        {/* Next */}
         {photos.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); next() }}
             aria-label="Nasledujúca fotka"
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-graphite-800/70 hover:bg-graphite-800/90 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -100,22 +99,20 @@ export function GalleryClient({ photos, title }: Props) {
           </button>
         )}
 
-        {/* Counter + expand hint */}
         {photos.length > 1 && (
-          <span className="absolute bottom-3 right-3 px-2.5 py-1 bg-graphite-800/70 text-white/80 text-[12px] font-semibold rounded-md" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+          <span className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/50 text-white/80 text-[12px] font-semibold rounded-md" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
             {active + 1} / {photos.length}
           </span>
         )}
 
-        {/* Expand icon hint */}
-        <span className="absolute bottom-3 left-3 w-7 h-7 flex items-center justify-center bg-graphite-800/60 rounded-md opacity-70">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <span className="absolute bottom-3 left-3 w-7 h-7 flex items-center justify-center bg-black/50 rounded-md">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
       </div>
 
-      {/* ── Thumbnail strip ────────────────────────────────────── */}
+      {/* ── Thumbnail strip ────────────────────────────────── */}
       {photos.length > 1 && (
         <div ref={stripRef} className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
           {photos.map((src, i) => (
@@ -125,12 +122,7 @@ export function GalleryClient({ photos, title }: Props) {
               onClick={() => { setActive(i); setLightbox(true) }}
               aria-label={`Fotka ${i + 1}`}
               aria-pressed={i === active}
-              className={`
-                relative shrink-0 rounded-lg overflow-hidden border-2
-                transition-[border-color,opacity] duration-150
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60
-                ${i === active ? 'border-amber opacity-100' : 'border-transparent opacity-55 hover:opacity-85 hover:border-white/25'}
-              `}
+              className={`relative shrink-0 rounded-lg overflow-hidden border-2 transition-[border-color,opacity] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 ${i === active ? 'border-amber opacity-100' : 'border-transparent opacity-55 hover:opacity-85 hover:border-white/25'}`}
               style={{ width: 80, height: 56 }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -140,38 +132,37 @@ export function GalleryClient({ photos, title }: Props) {
         </div>
       )}
 
-      {/* ── Lightbox ───────────────────────────────────────────── */}
-      {lightbox && (
+      {/* ── Lightbox — rendered via portal outside any transform context ── */}
+      {lightbox && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ animation: 'fadeIn 0.2s ease both' }}
+          style={{ position: 'fixed', inset: 0, zIndex: 9999, animation: 'fadeIn 0.2s ease both' }}
+          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX }}
+          onTouchEnd={(e) => {
+            const diff = touchStartX.current - e.changedTouches[0].clientX
+            if (Math.abs(diff) > 50) { diff > 0 ? next() : prev() }
+          }}
         >
           {/* Backdrop */}
           <div
-            className="absolute inset-0 bg-black/92"
+            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.92)', cursor: 'zoom-out' }}
             onClick={() => setLightbox(false)}
           />
 
-          {/* Image */}
-          <div
-            className="relative z-10 flex items-center justify-center w-full h-full px-16 py-12"
-            onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX }}
-            onTouchEnd={(e) => {
-              const diff = touchStartX.current - e.changedTouches[0].clientX
-              if (Math.abs(diff) > 50) { diff > 0 ? next() : prev() }
-            }}
-          >
+          {/* Centered image */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '56px 64px 56px 64px', pointerEvents: 'none' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photos[active]}
               alt={`${title} — foto ${active + 1}`}
-              onClick={(e) => e.stopPropagation()}
+              key={active}
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
                 objectFit: 'contain',
-                borderRadius: '12px',
-                animation: 'fadeIn 0.18s ease both',
+                borderRadius: '10px',
+                display: 'block',
+                pointerEvents: 'auto',
+                animation: 'fadeIn 0.15s ease both',
               }}
             />
           </div>
@@ -180,7 +171,9 @@ export function GalleryClient({ photos, title }: Props) {
           <button
             onClick={() => setLightbox(false)}
             aria-label="Zatvoriť"
-            className="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            style={{ position: 'absolute', top: 16, right: 16, zIndex: 1, width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: '50%', cursor: 'pointer', border: 'none', color: 'white' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.22)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -190,9 +183,11 @@ export function GalleryClient({ photos, title }: Props) {
           {/* Prev */}
           {photos.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); prev() }}
+              onClick={prev}
               aria-label="Predchádzajúca fotka"
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 1, width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: '50%', cursor: 'pointer', border: 'none', color: 'white' }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.22)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -203,9 +198,11 @@ export function GalleryClient({ photos, title }: Props) {
           {/* Next */}
           {photos.length > 1 && (
             <button
-              onClick={(e) => { e.stopPropagation(); next() }}
+              onClick={next}
               aria-label="Nasledujúca fotka"
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+              style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', zIndex: 1, width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: '50%', cursor: 'pointer', border: 'none', color: 'white' }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.22)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.12)')}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -215,14 +212,14 @@ export function GalleryClient({ photos, title }: Props) {
 
           {/* Counter */}
           {photos.length > 1 && (
-            <span
-              className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 px-3 py-1.5 bg-white/10 text-white/80 text-[13px] font-semibold rounded-full"
-              style={{ fontFamily: 'var(--font-barlow), sans-serif' }}
+            <div
+              style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 1, padding: '6px 14px', background: 'rgba(255,255,255,0.1)', borderRadius: 20, color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: 600, fontFamily: 'var(--font-barlow), sans-serif' }}
             >
               {active + 1} / {photos.length}
-            </span>
+            </div>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </>
   )
