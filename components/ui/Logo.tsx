@@ -22,14 +22,14 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
       className={`inline-flex items-center gap-2 select-none active:scale-95 transition-transform duration-150 ${className}`}
       aria-label="Damage Auto — domovská stránka"
     >
-      {/* Car icon */}
+      {/* Car icon — same height as text block (DAMAGE + AUTO) */}
       <Image
         src="/7D756145-2940-404C-B0B5-C5F38869C367-removebg-preview.png"
         alt=""
         aria-hidden="true"
-        width={Math.round(42 * scale)}
-        height={Math.round(42 * scale)}
-        style={{ objectFit: 'cover', objectPosition: 'center 55%', width: Math.round(42 * scale), height: Math.round(42 * scale) }}
+        width={Math.round(46 * scale)}
+        height={Math.round(32 * scale)}
+        style={{ objectFit: 'cover', objectPosition: 'center 53%', width: Math.round(46 * scale), height: Math.round(32 * scale), flexShrink: 0 }}
         priority
         unoptimized
       />
