@@ -29,7 +29,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
           alt=""
           aria-hidden="true"
           fill
-          style={{ objectFit: 'contain', transform: 'scale(1.45)', transformOrigin: 'center 58%' }}
+          style={{ objectFit: 'contain', transform: 'scale(1.45)', transformOrigin: 'center 72%' }}
           priority
           unoptimized
         />
