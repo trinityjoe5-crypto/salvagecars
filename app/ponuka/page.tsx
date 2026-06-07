@@ -4,7 +4,7 @@ import { CarCard } from '@/components/cars/CarCard'
 
 export const metadata: Metadata = {
   title: 'Ponuka vozidiel',
-  description: 'Prehliadajte všetky aktuálne dostupné havarované a poškodené vozidlá v ponuke Damage Auto.',
+  description: 'Prehliadajte všetky aktuálne dostupné havarované a poškodené vozidlá v ponuke Damaged Auto.',
 }
 
 export default function PonukaPage() {

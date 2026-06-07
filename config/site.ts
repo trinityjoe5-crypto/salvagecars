@@ -1,7 +1,7 @@
 // Central config — all contact details and brand constants live here.
 // Change once, reflected everywhere.
 export const site = {
-  name: 'Damage Auto',
+  name: 'Damaged Auto',
   tagline: 'Výkup a predaj havarovaných vozidiel',
   description:
     'Kupujeme a predávame vraky, havarované a poškodené vozidlá na Slovensku za najlepšie ceny.',

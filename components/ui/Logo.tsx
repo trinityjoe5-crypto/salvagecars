@@ -20,7 +20,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
         if (pathname === '/') window.scrollTo({ top: 0, behavior: 'smooth' })
       }}
       className={`inline-flex items-center select-none active:scale-95 transition-transform duration-150 ${className}`}
-      aria-label="Damage Auto — domovská stránka"
+      aria-label="Damaged Auto — domovská stránka"
     >
       {/* Square holder — height matches full text stack (DAMAGE + gap + AUTO) */}
       <div
@@ -53,7 +53,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
             letterSpacing: '-0.02em',
           }}
         >
-          DAMAGE
+          DAMAGED
         </span>
         <span
           className="block font-semibold leading-none"
