@@ -25,8 +25,8 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
       {/* Square holder — height matches full text stack (DAMAGE + gap + AUTO) */}
       <div
         style={{
-          width: Math.round(38 * scale),
-          height: Math.round(38 * scale),
+          width: Math.round(32 * scale),
+          height: Math.round(32 * scale),
           flexShrink: 0,
           position: 'relative',
           marginRight: Math.round(6 * scale),
