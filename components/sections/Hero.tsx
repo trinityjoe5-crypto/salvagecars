@@ -6,7 +6,7 @@ import { CountUp } from '@/components/ui/CountUp'
 import { useTranslation } from '@/lib/i18n'
 
 export function Hero() {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
 
   return (
     <section
@@ -37,7 +37,7 @@ export function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 pt-10 pb-6 sm:py-16">
-        <div className="max-w-2xl">
+        <div key={lang} className="max-w-2xl">
 
           {/* Eyebrow */}
           <div
