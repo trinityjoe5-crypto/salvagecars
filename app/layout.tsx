@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  metadataBase: new URL('https://damageauto.sk'), // TODO: update to real domain
+  metadataBase: new URL('https://damagedauto.sk'), // TODO: update to real domain
   openGraph: {
     type: 'website',
     locale: 'sk_SK',
