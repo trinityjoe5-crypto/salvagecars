@@ -12,7 +12,7 @@ interface Props {
 export function GalleryClient({ photos, title }: Props) {
   const [active, setActive] = useState(0)
   const [lightbox, setLightbox] = useState(false)
-  const [loaded, setLoaded] = useState<Record<number, boolean>>({})
+  const [firstLoaded, setFirstLoaded] = useState(false)
   const stripRef = useRef<HTMLDivElement>(null)
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([])
   const touchStartX = useRef(0)
@@ -70,27 +70,32 @@ export function GalleryClient({ photos, title }: Props) {
         style={{ aspectRatio: '16/9' }}
         onClick={() => setLightbox(true)}
       >
-        {/* Loading skeleton — visible until image loads */}
-        {!loaded[active] && (
-          <div className="absolute inset-0 bg-graphite-600 animate-pulse" />
+        {/* Loading skeleton — only until first image is ready */}
+        {!firstLoaded && (
+          <div className="absolute inset-0 bg-graphite-600 animate-pulse z-10" />
         )}
 
-        <Image
-          key={active}
-          src={photos[active]}
-          alt={`${title} — foto ${active + 1}`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1280px) calc(100vw - 2rem), calc(100vw - 440px)"
-          className="object-cover"
-          priority
-          onLoad={() => setLoaded((prev) => ({ ...prev, [active]: true }))}
-        />
+        {/* All images stacked — active: opacity 1, rest: opacity 0.
+            All start downloading in parallel so switching is instant. */}
+        {photos.map((src, i) => (
+          <Image
+            key={i}
+            src={src}
+            alt={`${title} — foto ${i + 1}`}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) calc(100vw - 2rem), calc(100vw - 440px)"
+            className="object-cover"
+            style={{ opacity: i === active ? 1 : 0, transition: 'opacity 0.18s ease' }}
+            priority={i === 0}
+            onLoad={i === 0 ? () => setFirstLoaded(true) : undefined}
+          />
+        ))}
 
         {photos.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); prev() }}
             aria-label="Predchádzajúca fotka"
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 z-20"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -102,7 +107,7 @@ export function GalleryClient({ photos, title }: Props) {
           <button
             onClick={(e) => { e.stopPropagation(); next() }}
             aria-label="Nasledujúca fotka"
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+            className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 z-20"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -111,12 +116,12 @@ export function GalleryClient({ photos, title }: Props) {
         )}
 
         {photos.length > 1 && (
-          <span className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/50 text-white/80 text-[12px] font-semibold rounded-md" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
+          <span className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/50 text-white/80 text-[12px] font-semibold rounded-md z-20" style={{ fontFamily: 'var(--font-barlow), sans-serif' }}>
             {active + 1} / {photos.length}
           </span>
         )}
 
-        <span className="absolute bottom-3 left-3 w-7 h-7 flex items-center justify-center bg-black/50 rounded-md">
+        <span className="absolute bottom-3 left-3 w-7 h-7 flex items-center justify-center bg-black/50 rounded-md z-20">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -148,7 +153,7 @@ export function GalleryClient({ photos, title }: Props) {
         </div>
       )}
 
-      {/* ── Lightbox — rendered via portal outside any transform context ── */}
+      {/* ── Lightbox ── */}
       {lightbox && createPortal(
         <div
           style={{ position: 'fixed', inset: 0, zIndex: 9999, animation: 'fadeIn 0.2s ease both' }}
@@ -164,21 +169,28 @@ export function GalleryClient({ photos, title }: Props) {
             onClick={() => setLightbox(false)}
           />
 
-          {/* Image — fills the inset area, contain-fit preserves aspect ratio */}
+          {/* All images stacked, same technique as main gallery */}
           <div
             style={{ position: 'absolute', inset: '52px 12px 44px 12px' }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image
-                key={active}
-                src={photos[active]}
-                alt={`${title} — foto ${active + 1}`}
-                fill
-                sizes="100vw"
-                priority
-                style={{ objectFit: 'contain', borderRadius: '8px', animation: 'fadeIn 0.15s ease both' }}
-              />
+              {photos.map((src, i) => (
+                <Image
+                  key={i}
+                  src={src}
+                  alt={`${title} — foto ${i + 1}`}
+                  fill
+                  sizes="100vw"
+                  priority={i === active}
+                  style={{
+                    objectFit: 'contain',
+                    borderRadius: '8px',
+                    opacity: i === active ? 1 : 0,
+                    transition: 'opacity 0.15s ease',
+                  }}
+                />
+              ))}
             </div>
           </div>
 
