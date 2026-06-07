@@ -1,18 +1,19 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useTranslation } from '@/lib/i18n'
 
 export function ScrollRevealProvider() {
+  const { lang } = useTranslation()
+
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
 
-    // Hide only elements currently below the viewport
+    // Reset all elements to hidden so they animate in again
     els.forEach(el => {
-      const top = el.getBoundingClientRect().top
-      if (top >= window.innerHeight * 0.98) {
-        el.style.opacity = '0'
-        el.style.transform = 'translateY(26px)'
-      }
+      el.style.transition = 'none'
+      el.style.opacity = '0'
+      el.style.transform = 'translateY(26px)'
     })
 
     const observer = new IntersectionObserver(
@@ -30,12 +31,10 @@ export function ScrollRevealProvider() {
       { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
     )
 
-    els.forEach(el => {
-      if (el.style.opacity === '0') observer.observe(el)
-    })
+    els.forEach(el => observer.observe(el))
 
     return () => observer.disconnect()
-  }, [])
+  }, [lang])
 
   return null
 }

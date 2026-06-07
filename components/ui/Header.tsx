@@ -30,7 +30,7 @@ export function Header() {
         {LANGS.map(({ code, label, flag }) => (
           <button
             key={code}
-            onClick={() => { setLang(code as Lang); window.scrollTo({ top: 0, behavior: 'smooth' }); if (mobile) setOpen(false) }}
+            onClick={() => { setLang(code as Lang); window.scrollTo({ top: 0, behavior: 'instant' }); if (mobile) setOpen(false) }}
             className={`
               flex items-center gap-1 px-2 py-1 rounded-md text-[12px] font-semibold
               transition-[background-color,color] duration-150
