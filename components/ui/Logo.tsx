@@ -29,7 +29,7 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
           height: Math.round(32 * scale),
           flexShrink: 0,
           position: 'relative',
-          marginRight: Math.round(6 * scale),
+          marginRight: Math.round(12 * scale),
         }}
       >
         <Image
