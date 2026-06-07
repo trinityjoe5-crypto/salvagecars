@@ -22,24 +22,26 @@ export function Logo({ className = '', size = 'md' }: LogoProps) {
       className={`inline-flex items-center select-none active:scale-95 transition-transform duration-150 ${className}`}
       aria-label="Damage Auto — domovská stránka"
     >
-      {/* Car icon — marginLeft compensates for transparent left edge in PNG */}
-      <Image
-        src="/7D756145-2940-404C-B0B5-C5F38869C367-removebg-preview.png"
-        alt=""
-        aria-hidden="true"
-        width={Math.round(70 * scale)}
-        height={Math.round(61 * scale)}
+      {/* Square holder — height matches full text stack (DAMAGE + gap + AUTO) */}
+      <div
         style={{
-          objectFit: 'contain',
-          width: Math.round(70 * scale),
-          height: Math.round(61 * scale),
+          width: Math.round(38 * scale),
+          height: Math.round(38 * scale),
           flexShrink: 0,
-          marginLeft: Math.round(-8 * scale),
-          marginRight: Math.round(-2 * scale),
+          position: 'relative',
+          marginRight: Math.round(6 * scale),
         }}
-        priority
-        unoptimized
-      />
+      >
+        <Image
+          src="/7D756145-2940-404C-B0B5-C5F38869C367-removebg-preview-2.png"
+          alt=""
+          aria-hidden="true"
+          fill
+          style={{ objectFit: 'contain' }}
+          priority
+          unoptimized
+        />
+      </div>
 
       {/* Text stack */}
       <span className="leading-none flex flex-col">
