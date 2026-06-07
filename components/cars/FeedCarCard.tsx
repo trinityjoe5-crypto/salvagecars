@@ -45,7 +45,7 @@ export function FeedCarCard({ car }: Props) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
-            unoptimized
+            priority
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-white/20">
