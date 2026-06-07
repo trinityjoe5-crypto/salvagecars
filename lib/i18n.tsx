@@ -6,7 +6,7 @@ export type Lang = 'sk' | 'cs' | 'hu' | 'pl'
 
 export const LANGS: { code: Lang; label: string; flag: string }[] = [
   { code: 'sk', label: 'SK', flag: '🇸🇰' },
-  { code: 'cs', label: 'CS', flag: '🇨🇿' },
+  { code: 'cs', label: 'CZ', flag: '🇨🇿' },
   { code: 'hu', label: 'HU', flag: '🇭🇺' },
   { code: 'pl', label: 'PL', flag: '🇵🇱' },
 ]
