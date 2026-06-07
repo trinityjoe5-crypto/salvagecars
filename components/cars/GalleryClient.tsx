@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import Image from 'next/image'
 
 interface Props {
   photos: string[]
@@ -11,6 +12,7 @@ interface Props {
 export function GalleryClient({ photos, title }: Props) {
   const [active, setActive] = useState(0)
   const [lightbox, setLightbox] = useState(false)
+  const [loaded, setLoaded] = useState<Record<number, boolean>>({})
   const stripRef = useRef<HTMLDivElement>(null)
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([])
   const touchStartX = useRef(0)
@@ -68,11 +70,20 @@ export function GalleryClient({ photos, title }: Props) {
         style={{ aspectRatio: '16/9' }}
         onClick={() => setLightbox(true)}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/* Loading skeleton — visible until image loads */}
+        {!loaded[active] && (
+          <div className="absolute inset-0 bg-graphite-600 animate-pulse" />
+        )}
+
+        <Image
+          key={active}
           src={photos[active]}
           alt={`${title} — foto ${active + 1}`}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) calc(100vw - 2rem), calc(100vw - 440px)"
+          className="object-cover"
+          priority
+          onLoad={() => setLoaded((prev) => ({ ...prev, [active]: true }))}
         />
 
         {photos.length > 1 && (
@@ -122,11 +133,16 @@ export function GalleryClient({ photos, title }: Props) {
               onClick={() => setActive(i)}
               aria-label={`Fotka ${i + 1}`}
               aria-pressed={i === active}
-              className={`relative shrink-0 rounded-lg overflow-hidden border-2 transition-[border-color,opacity] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 ${i === active ? 'border-amber opacity-100' : 'border-transparent opacity-55 hover:opacity-85 hover:border-white/25'}`}
+              className={`relative shrink-0 rounded-lg overflow-hidden border-2 bg-graphite-600 transition-[border-color,opacity] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 ${i === active ? 'border-amber opacity-100' : 'border-transparent opacity-55 hover:opacity-85 hover:border-white/25'}`}
               style={{ width: 80, height: 56 }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={src} alt={`${title} — náhľad ${i + 1}`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+              <Image
+                src={src}
+                alt={`${title} — náhľad ${i + 1}`}
+                fill
+                sizes="80px"
+                className="object-cover"
+              />
             </button>
           ))}
         </div>
@@ -148,23 +164,22 @@ export function GalleryClient({ photos, title }: Props) {
             onClick={() => setLightbox(false)}
           />
 
-          {/* Centered image — minimal padding so image fills the screen */}
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '52px 12px 44px 12px', pointerEvents: 'none' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photos[active]}
-              alt={`${title} — foto ${active + 1}`}
-              key={active}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                display: 'block',
-                pointerEvents: 'auto',
-                animation: 'fadeIn 0.15s ease both',
-              }}
-            />
+          {/* Image — fills the inset area, contain-fit preserves aspect ratio */}
+          <div
+            style={{ position: 'absolute', inset: '52px 12px 44px 12px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image
+                key={active}
+                src={photos[active]}
+                alt={`${title} — foto ${active + 1}`}
+                fill
+                sizes="100vw"
+                priority
+                style={{ objectFit: 'contain', borderRadius: '8px', animation: 'fadeIn 0.15s ease both' }}
+              />
+            </div>
           </div>
 
           {/* Close */}
@@ -180,7 +195,7 @@ export function GalleryClient({ photos, title }: Props) {
             </svg>
           </button>
 
-          {/* Prev — overlaid on image */}
+          {/* Prev */}
           {photos.length > 1 && (
             <button
               onClick={prev}
@@ -195,7 +210,7 @@ export function GalleryClient({ photos, title }: Props) {
             </button>
           )}
 
-          {/* Next — overlaid on image */}
+          {/* Next */}
           {photos.length > 1 && (
             <button
               onClick={next}
