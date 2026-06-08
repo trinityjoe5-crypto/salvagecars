@@ -5,8 +5,8 @@ export const site = {
   tagline: 'Výkup a predaj havarovaných vozidiel',
   description:
     'Kupujeme a predávame vraky, havarované a poškodené vozidlá na Slovensku za najlepšie ceny.',
-  phone: '+421 900 123 456',          // TODO: replace with real number
-  phoneDisplay: '+421 900 123 456',
+  phone: '+421907555666',
+  phoneDisplay: '+421 907 555 666',
   email: 'damagedautoeu@gmail.com',
   address: '— doplniť adresu —',      // TODO: replace with real address
   ico: '— doplniť IČO —',
