@@ -8,9 +8,10 @@ export const site = {
   phone: '+421907555666',
   phoneDisplay: '+421 907 555 666',
   email: 'damagedautoeu@gmail.com',
-  address: '— doplniť adresu —',      // TODO: replace with real address
-  ico: '— doplniť IČO —',
-  dic: '— doplniť DIČ —',
+  address: 'Tichá 5149/34, 811 02 Bratislava',
+  ico: '55183468',
+  dic: '2121892949',
+  icDph: 'SK2121892949',
   year: 2026,
   nav: [
     { label: 'Domov', href: '/' },

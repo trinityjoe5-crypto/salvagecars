@@ -54,7 +54,7 @@ export function Footer() {
               </a>
               <p className="text-[14px] text-white/40" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>{site.address}</p>
               <p className="text-[13px] text-white/30 mt-1" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>
-                {site.ico} &nbsp;·&nbsp; {site.dic}
+                IČO: {site.ico} &nbsp;·&nbsp; DIČ: {site.dic} &nbsp;·&nbsp; IČ DPH: {site.icDph}
               </p>
             </div>
           </div>
