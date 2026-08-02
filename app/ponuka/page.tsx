@@ -15,7 +15,7 @@ export default function PonukaPage() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
 
         {/* Header */}
-        <div className="mb-12">
+        <div className="page-enter mb-12">
           <div className="flex items-center gap-3 mb-4">
             <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
             <span
@@ -56,8 +56,10 @@ export default function PonukaPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {cars.map((car) => (
-              <CarCard key={car.id} car={car} />
+            {cars.map((car, i) => (
+              <div key={car.id} data-reveal data-reveal-delay={i < 6 ? i * 80 : 0}>
+                <CarCard car={car} />
+              </div>
             ))}
           </div>
         )}

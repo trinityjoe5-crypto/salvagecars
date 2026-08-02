@@ -16,7 +16,7 @@ export default async function PonukaVozidielPage() {
     <div className="min-h-screen bg-graphite pt-20 pb-20 sm:pb-28">
 
       {/* Page header */}
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-10 pb-10">
+      <div className="page-enter max-w-6xl mx-auto px-5 sm:px-8 pt-10 pb-10">
         <div className="flex items-center gap-3 mb-4">
           <span className="h-[2px] w-6 bg-amber" aria-hidden="true" />
           <span
@@ -56,8 +56,10 @@ export default async function PonukaVozidielPage() {
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {cars.map((car) => (
-              <FeedCarCard key={car.id} car={car} />
+            {cars.map((car, i) => (
+              <div key={car.id} data-reveal data-reveal-delay={i < 6 ? i * 80 : 0}>
+                <FeedCarCard car={car} priority={i < 3} />
+              </div>
             ))}
           </div>
         )}

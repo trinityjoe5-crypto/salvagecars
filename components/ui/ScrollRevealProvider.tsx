@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { useTranslation } from '@/lib/i18n'
 
 export function ScrollRevealProvider() {
   const { lang } = useTranslation()
+  const pathname = usePathname()
 
   useEffect(() => {
     const els = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
@@ -28,13 +30,13 @@ export function ScrollRevealProvider() {
           observer.unobserve(el)
         })
       },
-      { threshold: 0.05, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.05, rootMargin: '0px 0px 200px 0px' }
     )
 
     els.forEach(el => observer.observe(el))
 
     return () => observer.disconnect()
-  }, [lang])
+  }, [lang, pathname])
 
   return null
 }
