@@ -8,15 +8,30 @@ export function Contact() {
   const { t } = useTranslation()
   const [form, setForm] = useState({ name: '', phone: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(false)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log('Form submitted (not wired up yet):', form)
-    setSent(true)
+    setSubmitting(true)
+    setError(false)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Failed to send')
+      setSent(true)
+    } catch {
+      setError(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const contactItems = [
@@ -174,12 +189,19 @@ export function Contact() {
                   />
                 </div>
 
+                {error && (
+                  <p className="text-[13px] text-red-400" style={{ fontFamily: 'var(--font-figtree), sans-serif' }}>
+                    {t.contact.errorText}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="mt-1 w-full flex items-center justify-center gap-2.5 px-6 py-4 bg-amber text-white font-bold rounded-xl hover:bg-amber-600 active:scale-[0.98] transition-[background-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+                  disabled={submitting}
+                  className="mt-1 w-full flex items-center justify-center gap-2.5 px-6 py-4 bg-amber text-white font-bold rounded-xl hover:bg-amber-600 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none transition-[background-color,transform,opacity] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
                   style={{ fontFamily: 'var(--font-barlow), sans-serif', fontSize: '16px', letterSpacing: '0.04em' }}
                 >
-                  {t.contact.submit}
+                  {submitting ? '...' : t.contact.submit}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>

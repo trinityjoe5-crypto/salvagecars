@@ -102,6 +102,7 @@ const sk = {
     successTitle: 'Správa odoslaná',
     successText: 'Ozveme sa vám čo najskôr.',
     sendAnother: 'Odoslať ďalšiu správu',
+    errorText: 'Správu sa nepodarilo odoslať. Skúste to prosím znova alebo nám zavolajte.',
   },
   footer: {
     desc: 'Kupujeme a predávame havarované vozidlá na Slovensku za najlepšie ceny.',
@@ -231,6 +232,7 @@ const cs: typeof sk = {
     successTitle: 'Zpráva odeslána',
     successText: 'Ozveme se vám co nejdříve.',
     sendAnother: 'Odeslat další zprávu',
+    errorText: 'Zprávu se nepodařilo odeslat. Zkuste to prosím znovu nebo nám zavolejte.',
   },
   footer: {
     desc: 'Kupujeme a prodáváme havarovaná vozidla na Slovensku za nejlepší ceny.',
@@ -360,6 +362,7 @@ const hu: typeof sk = {
     successTitle: 'Üzenet elküldve',
     successText: 'Hamarosan visszajelzünk.',
     sendAnother: 'Újabb üzenet küldése',
+    errorText: 'Az üzenetet nem sikerült elküldeni. Kérjük, próbálja újra, vagy hívjon minket.',
   },
   footer: {
     desc: 'Balesetes járműveket veszünk és adunk el Szlovákiában a legjobb árakon.',
@@ -489,6 +492,7 @@ const pl: typeof sk = {
     successTitle: 'Wiadomość wysłana',
     successText: 'Odezwiemy się jak najszybciej.',
     sendAnother: 'Wyślij kolejną wiadomość',
+    errorText: 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń do nas.',
   },
   footer: {
     desc: 'Kupujemy i sprzedajemy pojazdy powypadkowe na Słowacji w najlepszych cenach.',
