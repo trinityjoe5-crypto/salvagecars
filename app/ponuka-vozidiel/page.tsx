@@ -67,6 +67,16 @@ export default async function PonukaVozidielPage() {
                 <FeedCarCard car={car} priority={i < 3} />
               </div>
             ))}
+            <div className="mt-10 text-center">
+  <a
+    href="https://automoniq.sk/vozidla/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center rounded-xl bg-amber px-8 py-4 font-bold text-white hover:bg-amber-600 transition-colors"
+  >
+    Zobraziť všetky autá
+  </a>
+</div>
           </div>
         )}
       </div>
