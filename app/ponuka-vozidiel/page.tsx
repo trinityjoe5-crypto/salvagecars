@@ -10,7 +10,13 @@ export const metadata: Metadata = {
 }
 
 export default async function PonukaVozidielPage() {
-  const cars = await fetchCars()
+  const cars = (await fetchCars())
+  .filter(car => !car.isReserved)
+  .sort((a, b) =>
+    new Date(b.timeCreated).getTime() -
+    new Date(a.timeCreated).getTime()
+  )
+  .slice(0, 6)
 
   return (
     <div className="min-h-screen bg-graphite pt-20 pb-20 sm:pb-28">
