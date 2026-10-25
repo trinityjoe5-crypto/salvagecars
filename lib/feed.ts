@@ -1,4 +1,4 @@
-import { FEED_URL, REVALIDATE_SECONDS } from './config'
+import { getFeedUrl } from './config'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -35,14 +35,14 @@ export interface FeedCar {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function getTag(xml: string, tag: string): string {
-  const re = new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`)
+  const re = new RegExp(`<${tag}(?:\\s[^>]*)?>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`)
   const m = xml.match(re)
   if (!m) return ''
   return (m[1] ?? m[2] ?? '').trim()
 }
 
 function getTagAll(xml: string, tag: string): string[] {
-  const re = new RegExp(`<${tag}[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`, 'g')
+  const re = new RegExp(`<${tag}(?:\\s[^>]*)?>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([^<]*))<\\/${tag}>`, 'g')
   const results: string[] = []
   let m: RegExpExecArray | null
   while ((m = re.exec(xml)) !== null) {
@@ -53,13 +53,13 @@ function getTagAll(xml: string, tag: string): string[] {
 }
 
 function getBlock(xml: string, tag: string): string {
-  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`)
+  const re = new RegExp(`<${tag}(?:\\s[^>]*)?>[\\s\\S]*?<\\/${tag}>`)
   const m = xml.match(re)
   return m ? m[0] : ''
 }
 
 function getBlockAll(xml: string, tag: string): string[] {
-  const re = new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, 'g')
+  const re = new RegExp(`<${tag}(?:\\s[^>]*)?>[\\s\\S]*?<\\/${tag}>`, 'g')
   const results: string[] = []
   let m: RegExpExecArray | null
   while ((m = re.exec(xml)) !== null) {
@@ -113,13 +113,25 @@ function parseAd(xml: string): FeedCar {
 // Public API
 // ─────────────────────────────────────────────────────────────────────────────
 
+export function parseFeed(xml: string): FeedCar[] {
+  const cars = getBlockAll(xml, 'advertisement').map(parseAd).filter(car => car.id)
+  // Some exports repeat the same inventory; render each vehicle only once.
+  return [...new Map(cars.map(car => [car.id, car])).values()]
+}
+
 export async function fetchCars(): Promise<FeedCar[]> {
+  const url = getFeedUrl()
+  if (!url) {
+    console.error('[feed] FEED_URL or AUTOBAZAR_FEED_URL is not configured')
+    return []
+  }
   try {
-    const res = await fetch(FEED_URL, {
+    const res = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       },
-      next: { revalidate: REVALIDATE_SECONDS },
+      cache: 'no-store',
+      signal: AbortSignal.timeout(15000),
     })
 
     if (!res.ok) {
@@ -128,16 +140,12 @@ export async function fetchCars(): Promise<FeedCar[]> {
     }
 
     const xml = await res.text()
-    const adBlocks = getBlockAll(xml, 'advertisement')
-
-    if (adBlocks.length === 0) {
-      console.error('[feed] no <advertisement> blocks found, raw start:', xml.slice(0, 100))
-      return []
-    }
-
-    return adBlocks.map(parseAd)
-  } catch (err) {
-    console.error('[feed] error:', err)
+    const cars = parseFeed(xml)
+    if (cars.length === 0) console.error('[feed] no valid advertisements found')
+    return cars
+  } catch {
+    // URLs can contain feed access tokens; do not log fetch exceptions.
+    console.error('[feed] request failed or timed out')
     return []
   }
 }

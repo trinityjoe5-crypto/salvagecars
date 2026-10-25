@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { fetchCars } from '@/lib/feed'
 import { FeedCarCard } from '@/components/cars/FeedCarCard'
 
-export const revalidate = 3600
+// Read runtime secrets and the current feed, without an ISR storage dependency.
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Ponuka vozidiel',

@@ -6,7 +6,8 @@ import { Vykup } from '@/components/sections/Vykup'
 import { Contact } from '@/components/sections/Contact'
 import { fetchCars } from '@/lib/feed'
 
-export const revalidate = 3600
+// Read runtime secrets and the current feed, without an ISR storage dependency.
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const featured = (await fetchCars()).slice(0, 3)

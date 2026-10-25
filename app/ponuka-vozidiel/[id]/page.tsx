@@ -5,7 +5,8 @@ import { fetchCars, fetchCarById } from '@/lib/feed'
 import { GalleryClient } from '@/components/cars/GalleryClient'
 import { site } from '@/config/site'
 
-export const revalidate = 3600
+// Read runtime secrets and the current feed, without an ISR storage dependency.
+export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
 export async function generateStaticParams() {

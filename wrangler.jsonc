@@ -1,8 +1,11 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "damagedauto",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-19",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
@@ -12,5 +15,7 @@
       "binding": "WORKER_SELF_REFERENCE",
       "service": "damagedauto"
     }
-  ]
+  ],
+  "workers_dev": true,
+  "keep_vars": true
 }

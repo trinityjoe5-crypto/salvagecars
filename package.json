@@ -6,24 +6,33 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:cloudflare": "opennextjs-cloudflare build",
+    "preview": "npm run build:cloudflare && opennextjs-cloudflare preview",
+    "deploy": "npm run build:cloudflare && opennextjs-cloudflare deploy",
+    "check:worker": "node scripts/check-worker.mjs",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
-    "next": "16.2.6",
+    "next": "16.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "resend": "^6.18.1"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "1.20.13",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "16.4.3",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
-    "@opennextjs/cloudflare": "1.20.13",
     "wrangler": "^4.152.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
